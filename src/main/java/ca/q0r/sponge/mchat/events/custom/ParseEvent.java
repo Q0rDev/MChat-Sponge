@@ -6,7 +6,6 @@ import ca.q0r.sponge.mchat.config.ConfigManager;
 import ca.q0r.sponge.mchat.config.ConfigType;
 import ca.q0r.sponge.mchat.config.main.MainType;
 import ca.q0r.sponge.mchat.types.IndicatorType;
-import ca.q0r.sponge.mchat.types.InfoType;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.variables.VariableManager;
 import com.typesafe.config.ConfigValue;
@@ -163,7 +162,7 @@ public class ParseEvent implements Event {
         StringBuffer sb = new StringBuffer();
 
         while (matcher.find()) {
-            String info = Reader.getRawInfo(uuid, InfoType.USER, world, matcher.group(1));
+            String info = Reader.getRawInfo(uuid, world, matcher.group(1));
             String var = info != null ? info : "";
 
             matcher.appendReplacement(sb, Matcher.quoteReplacement(var));

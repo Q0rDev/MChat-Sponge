@@ -4,7 +4,6 @@ import ca.q0r.sponge.mchat.config.ConfigManager;
 import ca.q0r.sponge.mchat.config.ConfigType;
 import ca.q0r.sponge.mchat.config.locale.LocaleType;
 import ca.q0r.sponge.mchat.types.EventType;
-import ca.q0r.sponge.mchat.types.InfoType;
 import ca.q0r.sponge.mchat.types.PluginType;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
@@ -25,17 +24,12 @@ public class Reader {
      *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param world Name of the InfoType's World.
-     * @param type  InfoType being reflected upon.
      * @param info  Info Variable being resolved.
      * @return Raw Info.
      */
-    public static String getRawInfo(UUID uuid, InfoType type, String world, String info) {
+    public static String getRawInfo(UUID uuid, String world, String info) {
         if (uuid == null) {
             return "";
-        }
-
-        if (type == null) {
-            type = InfoType.USER;
         }
 
         if (world == null) {
@@ -51,83 +45,77 @@ public class Reader {
         } else if (API.isPluginEnabled(PluginType.OLD_NODES)) {
             return getSpongeInfo(uuid, info);
         } else if (API.isPluginEnabled(PluginType.NEW_INFO)) {
-            return getMChatInfo(uuid, type, world, info);
+            return getMChatInfo(uuid, world, info);
         }
 
-        return getMChatInfo(uuid, type, world, info);
+        return getMChatInfo(uuid, world, info);
     }
 
     /**
      * Raw Prefix Resolving
      *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
-     * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Prefix.
      */
-    public static String getRawPrefix(UUID uuid, InfoType type, String world) {
-        return getRawInfo(uuid, type, world, "prefix");
+    public static String getRawPrefix(UUID uuid, String world) {
+        return getRawInfo(uuid, world, "prefix");
     }
 
     /**
      * Raw Suffix Resolving
-     *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
-     * @param type  InfoType being reflected upon.
+
      * @param world Name of the InfoType's World.
      * @return Raw Suffix.
      */
-    public static String getRawSuffix(UUID uuid, InfoType type, String world) {
-        return getRawInfo(uuid, type, world, "suffix");
+    public static String getRawSuffix(UUID uuid, String world) {
+        return getRawInfo(uuid, world, "suffix");
     }
 
     /**
      * Raw Group Resolving
      *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
-     * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Group.
      */
-    public static String getRawGroup(UUID uuid, InfoType type, String world) {
-        return getRawInfo(uuid, type, world, "group");
+    public static String getRawGroup(UUID uuid, String world) {
+        return getRawInfo(uuid, world, "group");
     }
 
     /**
      * Raw Info Resolving
      *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
-     * @param type  InfoType being reflected upon.
      * @param world Player's World.
      * @param info  Info Variable being resolved.
      * @return Raw Info.
      */
-    public static String getInfo(UUID uuid, InfoType type, String world, String info) {
-        return MessageUtil.addColour(getRawInfo(uuid, type, world, info));
+    public static String getInfo(UUID uuid, String world, String info) {
+        return MessageUtil.addColour(getRawInfo(uuid, world, info));
     }
 
     /**
      * Formatted Prefix Resolving
      *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
-     * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Formatted Prefix.
      */
-    public static String getPrefix(UUID uuid, InfoType type, String world) {
-        return getInfo(uuid, type, world, "prefix");
+    public static String getPrefix(UUID uuid, String world) {
+        return getInfo(uuid, world, "prefix");
     }
 
     /**
      * Formatted Suffix Resolving
      *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
-     * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Formatted Suffix.
      */
-    public static String getSuffix(UUID uuid, InfoType type, String world) {
-        return getInfo(uuid, type, world, "suffix");
+    public static String getSuffix(UUID uuid, String world) {
+        return getInfo(uuid, world, "suffix");
     }
 
     /**
@@ -138,22 +126,20 @@ public class Reader {
      * @return Formatted Group.
      */
     public static String getGroup(UUID uuid, String world) {
-        return getInfo(uuid, InfoType.USER, world, "group");
+        return getInfo(uuid, world, "group");
     }
 
-    private static String getMChatInfo(UUID uuid, InfoType type, String world, String info) {
+    private static String getMChatInfo(UUID uuid, String world, String info) {
         if (info.equals("group")) {
             return getMChatGroup(uuid);
         }
-
-        String iType = type.getConfValue();
-
+        
         ConfigFile infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
 
-        if (infoConfig.hasPath(iType + "." + uuid.toString() + ".info." + info)) {
-            return infoConfig.getString(iType + "." + uuid.toString() + ".info." + info);
-        } else if (infoConfig.hasPath(iType + "." + uuid.toString() + ".worlds." + world + "." + info)) {
-            return infoConfig.getString(iType + "." + uuid.toString() + ".worlds." + world + "." + info);
+        if (infoConfig.hasPath("users." + uuid.toString() + ".info." + info)) {
+            return infoConfig.getString("users." + uuid.toString() + ".info." + info);
+        } else if (infoConfig.hasPath("users." + uuid.toString() + ".worlds." + world + "." + info)) {
+            return infoConfig.getString("users." + uuid.toString() + ".worlds." + world + "." + info);
         } else if (infoConfig.hasPath("users." + uuid.toString() + ".group")) {
             String group = infoConfig.getString("users." + uuid.toString() + ".group");
 
