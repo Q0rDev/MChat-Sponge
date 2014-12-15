@@ -1,0 +1,149 @@
+package ca.q0r.sponge.mchat.util;
+
+import com.google.common.base.Optional;
+import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.api.util.command.CommandSource;
+
+/**
+ * Utility Class for various Message related tasks.
+ */
+public class MessageUtil {
+    /**
+     * Raw Message Sending.
+     *
+     * @param sender  Sender sending message.
+     * @param message Message being sent.
+     */
+    public static void sendRawMessage(CommandSource sender, String message) {
+        sender.sendMessage(message);
+    }
+
+    /**
+     * Coloured Message Sending.
+     *
+     * @param sender  Sender sending message.
+     * @param message Message being sent.
+     */
+    public static void sendColouredMessage(CommandSource sender, String message) {
+        sendRawMessage(sender, addColour(message));
+    }
+
+    /**
+     * Message Sending.
+     *
+     * @param sender  Sender sending message.
+     * @param message Message being sent.
+     */
+    public static void sendMessage(CommandSource sender, String message) {
+        sendRawMessage(sender, format(message));
+    }
+
+    /**
+     * Logger.
+     *
+     * @param message Object being Logged.
+     */
+    public static void log(Object message) {
+        Optional<PluginContainer> plugin = ServerUtil.getGame().getPluginManager().getPlugin("MChat");
+
+        if (plugin.isPresent()) {
+            ServerUtil.getGame().getPluginManager().getLogger(plugin.get()).info(message.toString());
+        }
+    }
+
+    /**
+     * Logger.
+     *
+     * @param message Object being Logged.
+     */
+    public static void logFormatted(Object message) {
+        log(format(message.toString()));
+    }
+
+    /**
+     * Logger.
+     *
+     * @param name    Name of plugin to be formatted.
+     * @param message Object being Logged.
+     */
+    public static void logFormatted(String name, Object message) {
+        log(format(name, message.toString()));
+    }
+
+    /**
+     * Logger.
+     *
+     * @param message Object being Logged.
+     */
+    public static void logColoured(Object message) {
+        log(addColour(message.toString()));
+    }
+
+
+    /**
+     * Colour Formatting.
+     *
+     * @param string String being Formatted.
+     * @return Coloured String.
+     */
+    public static String addColour(String string) {
+        string = string.replace("`e", "")
+                .replace("`r", "\u00A7c").replace("`R", "\u00A74")
+                .replace("`y", "\u00A7e").replace("`Y", "\u00A76")
+                .replace("`g", "\u00A7a").replace("`G", "\u00A72")
+                .replace("`a", "\u00A7b").replace("`A", "\u00A73")
+                .replace("`b", "\u00A79").replace("`B", "\u00A71")
+                .replace("`p", "\u00A7d").replace("`P", "\u00A75")
+                .replace("`k", "\u00A70").replace("`s", "\u00A77")
+                .replace("`S", "\u00A78").replace("`w", "\u00A7f");
+
+        string = string.replace("<r>", "")
+                .replace("<black>", "\u00A70").replace("<navy>", "\u00A71")
+                .replace("<green>", "\u00A72").replace("<teal>", "\u00A73")
+                .replace("<red>", "\u00A74").replace("<purple>", "\u00A75")
+                .replace("<gold>", "\u00A76").replace("<silver>", "\u00A77")
+                .replace("<gray>", "\u00A78").replace("<blue>", "\u00A79")
+                .replace("<lime>", "\u00A7a").replace("<aqua>", "\u00A7b")
+                .replace("<rose>", "\u00A7c").replace("<pink>", "\u00A7d")
+                .replace("<yellow>", "\u00A7e").replace("<white>", "\u00A7f");
+
+        string = string.replaceAll("(§([a-fk-orA-FK-OR0-9]))", "\u00A7$2");
+
+        string = string.replaceAll("(&([a-fk-orA-FK-OR0-9]))", "\u00A7$2");
+
+        return string.replace("&&", "&");
+    }
+
+    /**
+     * Colour Removal.
+     *
+     * @param string String Colour is being removed from.
+     * @return DeColoured String.
+     */
+    public static String removeColour(String string) {
+        string = addColour(string);
+
+        return string.replaceAll("(§([a-fk-orA-FK-OR0-9]))", "§z");
+    }
+
+    /**
+     * Plugin Formatting.
+     *
+     * @param message Message being appended.
+     * @return Message appended to [MChat].
+     */
+    public static String format(String message) {
+        return addColour("&2[&4M&8Chat&2] &6" + message);
+    }
+
+    /**
+     * Plugin Formatting.
+     *
+     * @param name    Name of plugin to be formatted.
+     * @param message Message being appended.
+     * @return Message appended to name.
+     */
+    public static String format(String name, String message) {
+        return addColour("&2[&4" + name + "&2] &6" + message);
+    }
+}
