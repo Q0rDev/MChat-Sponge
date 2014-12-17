@@ -17,6 +17,7 @@ public class CommandUtil {
      *
      * @param sender     Object Sending Command.
      * @param permission Permissions attached to command.
+     *
      * @return Result of Permission check.
      */
     public static Boolean hasCommandPerm(CommandSource sender, String permission) {
@@ -33,6 +34,7 @@ public class CommandUtil {
      *
      * @param sender Object sending command.
      * @param player Player to check for.
+     *
      * @return Result of Online Check.
      */
     @Deprecated
@@ -50,6 +52,7 @@ public class CommandUtil {
      *
      * @param sender Object sending command.
      * @param uuid   UUID to check for.
+     *
      * @return Result of Online Check.
      */
     public static Boolean isOnlineForCommand(CommandSource sender, UUID uuid) {
@@ -66,6 +69,7 @@ public class CommandUtil {
      *
      * @param sender Object sending command.
      * @param player Player to check for.
+     *
      * @return Result of Online Check.
      */
     public static Boolean isOnlineForCommand(CommandSource sender, Player player) {

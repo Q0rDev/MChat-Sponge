@@ -25,6 +25,7 @@ public class Reader {
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param world Name of the InfoType's World.
      * @param info  Info Variable being resolved.
+     *
      * @return Raw Info.
      */
     public static String getRawInfo(UUID uuid, String world, String info) {
@@ -56,6 +57,7 @@ public class Reader {
      *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param world Name of the InfoType's World.
+     *
      * @return Raw Prefix.
      */
     public static String getRawPrefix(UUID uuid, String world) {
@@ -64,9 +66,10 @@ public class Reader {
 
     /**
      * Raw Suffix Resolving
+     *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
-
      * @param world Name of the InfoType's World.
+     *
      * @return Raw Suffix.
      */
     public static String getRawSuffix(UUID uuid, String world) {
@@ -78,6 +81,7 @@ public class Reader {
      *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param world Name of the InfoType's World.
+     *
      * @return Raw Group.
      */
     public static String getRawGroup(UUID uuid, String world) {
@@ -90,6 +94,7 @@ public class Reader {
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param world Player's World.
      * @param info  Info Variable being resolved.
+     *
      * @return Raw Info.
      */
     public static String getInfo(UUID uuid, String world, String info) {
@@ -101,6 +106,7 @@ public class Reader {
      *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param world Name of the InfoType's World.
+     *
      * @return Formatted Prefix.
      */
     public static String getPrefix(UUID uuid, String world) {
@@ -112,6 +118,7 @@ public class Reader {
      *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param world Name of the InfoType's World.
+     *
      * @return Formatted Suffix.
      */
     public static String getSuffix(UUID uuid, String world) {
@@ -123,6 +130,7 @@ public class Reader {
      *
      * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param world Name of the InfoType's World.
+     *
      * @return Formatted Group.
      */
     public static String getGroup(UUID uuid, String world) {
@@ -133,7 +141,7 @@ public class Reader {
         if (info.equals("group")) {
             return getMChatGroup(uuid);
         }
-        
+
         ConfigFile infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
 
         if (infoConfig.hasPath("users." + uuid.toString() + ".info." + info)) {
@@ -229,6 +237,7 @@ public class Reader {
      * Group Name Resolver
      *
      * @param group Group to be Resolved.
+     *
      * @return Group Name's Alias.
      */
     public static String getGroupName(String group) {
@@ -249,6 +258,7 @@ public class Reader {
      * World Name Resolver
      *
      * @param world Group to be Resolved.
+     *
      * @return World Name's Alias.
      */
     public static String getWorldName(String world) {
@@ -269,6 +279,7 @@ public class Reader {
      * Player Name Resolver
      *
      * @param uuid UUID of Player to be Resolved.
+     *
      * @return Player Name's MChat Alias.
      */
     public static String getMName(UUID uuid) {
@@ -287,6 +298,7 @@ public class Reader {
      * Event Message Resolver.
      *
      * @param type Type of Event you want to grab.
+     *
      * @return Event Message.
      */
     public static String getEventMessage(EventType type) {

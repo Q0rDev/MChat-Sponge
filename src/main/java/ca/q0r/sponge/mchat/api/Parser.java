@@ -19,6 +19,7 @@ public class Parser {
      * @param world  Player's World.
      * @param msg    Message being displayed.
      * @param format Resulting Format.
+     *
      * @return Formatted Message.
      */
     public static String parseMessage(UUID uuid, String world, String msg, String format) {
@@ -35,6 +36,7 @@ public class Parser {
      * @param uuid  UUID of Player being reflected upon.
      * @param world Name of Player's World.
      * @param msg   Message being displayed.
+     *
      * @return Formatted Chat Message.
      */
     public static String parseChatMessage(UUID uuid, String world, String msg) {
@@ -46,6 +48,7 @@ public class Parser {
      *
      * @param uuid  UUID of Player being reflected upon.
      * @param world Name of Player's World.
+     *
      * @return Formatted Player Name.
      */
     public static String parsePlayerName(UUID uuid, String world) {
@@ -58,6 +61,7 @@ public class Parser {
      * @param uuid  UUID of Player being reflected upon.
      * @param world Name of Player's World.
      * @param type  Event Type being formatted.
+     *
      * @return Formatted Event Message.
      */
     public static String parseEvent(UUID uuid, String world, EventType type) {
@@ -69,6 +73,7 @@ public class Parser {
      *
      * @param uuid  UUID of Player being reflected upon.
      * @param world Name of Player's World.
+     *
      * @return Formatted TabbedList Name.
      */
     public static String parseCustomName(UUID uuid, String world) {
@@ -80,6 +85,7 @@ public class Parser {
      *
      * @param uuid  UUID of Player being reflected upon.
      * @param world Name of Player's World.
+     *
      * @return Formatted ListCommand Name.
      */
     public static String parseListCmd(UUID uuid, String world) {
@@ -92,6 +98,7 @@ public class Parser {
      * @param uuid  UUID of Player being reflected upon.
      * @param world Name of Player's World.
      * @param msg   Message being displayed.
+     *
      * @return Formatted Me Message.
      */
     public static String parseMe(UUID uuid, String world, String msg) {

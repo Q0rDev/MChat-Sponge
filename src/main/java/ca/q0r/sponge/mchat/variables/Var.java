@@ -16,6 +16,7 @@ public abstract class Var {
      * Variable Processor.
      *
      * @param uuid UUID of Player used to parse Variable.
+     *
      * @return Variable's Value after processing.
      */
     @Keys

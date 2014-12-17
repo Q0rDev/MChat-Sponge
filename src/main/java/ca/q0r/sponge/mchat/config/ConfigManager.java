@@ -35,6 +35,7 @@ public class ConfigManager {
      * HOCON retriever.
      *
      * @param type Type of Config to get.
+     *
      * @return HOCON Config.
      */
     public static Config getConfig(ConfigType type) {

@@ -96,6 +96,7 @@ public class VariableManager {
      * @param uuid     Name of Player being formatted against.
      * @param msg      Message being relayed.
      * @param doColour Whether or not to colour replacement value.
+     *
      * @return String with Variables replaced.
      */
     public static String replaceVars(String format, UUID uuid, String msg, Boolean doColour) {
@@ -176,6 +177,7 @@ public class VariableManager {
      *
      * @param uuid   Player's UUID.
      * @param format String to be replaced.
+     *
      * @return String with Custom Variables replaced.
      */
     public static String replaceCustVars(UUID uuid, String format) {

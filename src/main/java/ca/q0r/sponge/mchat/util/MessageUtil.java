@@ -84,6 +84,7 @@ public class MessageUtil {
      * Colour Formatting.
      *
      * @param string String being Formatted.
+     *
      * @return Coloured String.
      */
     public static String addColour(String string) {
@@ -118,6 +119,7 @@ public class MessageUtil {
      * Colour Removal.
      *
      * @param string String Colour is being removed from.
+     *
      * @return DeColoured String.
      */
     public static String removeColour(String string) {
@@ -130,6 +132,7 @@ public class MessageUtil {
      * Plugin Formatting.
      *
      * @param message Message being appended.
+     *
      * @return Message appended to [MChat].
      */
     public static String format(String message) {
@@ -141,6 +144,7 @@ public class MessageUtil {
      *
      * @param name    Name of plugin to be formatted.
      * @param message Message being appended.
+     *
      * @return Message appended to name.
      */
     public static String format(String name, String message) {

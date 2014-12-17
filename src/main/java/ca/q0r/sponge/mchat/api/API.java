@@ -129,6 +129,7 @@ public class API {
      * Health Bar Formatting
      *
      * @param player Player the HealthBar is being rendered for.
+     *
      * @return Formatted Health Bar.
      */
     public static String createHealthBar(Player player) {
@@ -143,6 +144,7 @@ public class API {
      * Food Bar Formatting
      *
      * @param player Player the FoodBar is being rendered for.
+     *
      * @return Formatted Health Bar.
      */
     public static String createFoodBar(Player player) {
@@ -159,6 +161,7 @@ public class API {
      * @param currentValue Current Value of Bar.
      * @param maxValue     Max Value of Bar.
      * @param barLength    Length of Bar.
+     *
      * @return Formatted Health Bar.
      */
     public static String createBasicBar(float currentValue, float maxValue, float barLength) {
@@ -186,6 +189,7 @@ public class API {
      *
      * @param player Player being checked.
      * @param node   Permission Node being checked.
+     *
      * @return Player has Node.
      */
     public static Boolean checkPermissions(Player player, String node) {
@@ -198,6 +202,7 @@ public class API {
      * @param pName Name of Player being checked.
      * @param world Name of Player's World.
      * @param node  Permission Node being checked.
+     *
      * @return Player has Node.
      */
     @Deprecated
@@ -210,6 +215,7 @@ public class API {
      *
      * @param uuid UUID of Player being checked.
      * @param node Permission Node being checked.
+     *
      * @return Player has Node.
      */
     public static Boolean checkPermissions(UUID uuid, String node) {
@@ -222,6 +228,7 @@ public class API {
      *
      * @param source CommandSender being checked.
      * @param node   Permission Node being checked.
+     *
      * @return Sender has Node.
      */
     public static Boolean checkPermissions(CommandSource source, String node) {
@@ -234,6 +241,7 @@ public class API {
      * @param source  String being modified.
      * @param changes Map of Search / Replace pairs.
      * @param type    Type of Variable.
+     *
      * @return Source with variables replaced.
      */
     public static String replace(String source, TreeMap<String, String> changes, IndicatorType type) {
@@ -253,6 +261,7 @@ public class API {
      * @param search  String being searched for.
      * @param replace String search term is to be replaced with.
      * @param type    Type of Variable.
+     *
      * @return Source with variable replaced.
      */
     public static String replace(String source, String search, String replace, IndicatorType type) {
@@ -263,6 +272,7 @@ public class API {
      * Used to check if Plugin is enabled.
      *
      * @param type Plugin to be checked.
+     *
      * @return <code>true</code> if plugin is enabled <code>false</code> if not.
      */
     public static Boolean isPluginEnabled(PluginType type) {
