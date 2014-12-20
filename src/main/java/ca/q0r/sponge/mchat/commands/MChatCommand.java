@@ -4,6 +4,7 @@ import ca.q0r.sponge.mchat.config.ConfigManager;
 import ca.q0r.sponge.mchat.config.ConfigType;
 import ca.q0r.sponge.mchat.util.CommandUtil;
 import ca.q0r.sponge.mchat.util.MessageUtil;
+import ca.q0r.sponge.util.VersionUtil;
 import com.google.common.base.Optional;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.api.util.command.CommandCallable;
@@ -34,9 +35,9 @@ public class MChatCommand implements CommandCallable {
                 return true;
             }
 
-            String[] vArray = "${version}-${commit}".split("-");
+            String[] vArray = VersionUtil.VERSION.split("-");
 
-            MessageUtil.sendMessage(source, "&6Full Version: &1${version}-${commit}");
+            MessageUtil.sendMessage(source, "&6Full Version: &1" + VersionUtil.VERSION);
             MessageUtil.sendMessage(source, "&6MineCraft Version: &2" + vArray[0]);
             MessageUtil.sendMessage(source, "&6Release Version: &2" + vArray[1]);
             MessageUtil.sendMessage(source, "&Git Commit &5#&6:&2 " + (vArray.length < 4 ? vArray[2] : vArray[3]));

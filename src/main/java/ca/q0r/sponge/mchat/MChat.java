@@ -16,6 +16,7 @@ import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
 import ca.q0r.sponge.mchat.util.Timer;
 import ca.q0r.sponge.mchat.variables.VariableManager;
+import ca.q0r.sponge.util.VersionUtil;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.event.state.ServerStartingEvent;
 import org.spongepowered.api.event.state.ServerStoppingEvent;
@@ -25,7 +26,7 @@ import org.spongepowered.api.service.event.EventManager;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.event.Subscribe;
 
-@Plugin(id = "MChat", name = "MChat", version = "${version}-${commit}", dependencies = "after:GeoIPTools,Heroes,Towny,Vault,SimpleClans2,SimpleClansChat;")
+@Plugin(id = "MChat", name = "MChat", version = VersionUtil.VERSION, dependencies = "after:GeoIPTools,Heroes,Towny,Vault,SimpleClans2,SimpleClansChat;")
 public class MChat {
     @Subscribe
     public void onEnable(ServerStartingEvent event) {
@@ -62,7 +63,7 @@ public class MChat {
         // Calculate Startup Timer
         long diff = timer.difference();
 
-        MessageUtil.log("[MChat] MChat v${version}-${commit} is enabled! [" + diff + "ms]");
+        MessageUtil.log("[MChat] MChat v" + VersionUtil.VERSION + " is enabled! [" + diff + "ms]");
     }
 
     @Subscribe
@@ -81,7 +82,7 @@ public class MChat {
         // Calculate Shutdown Timer
         long diff = timer.difference();
 
-        MessageUtil.log("[MChat] MChat v${version}-${commit} is disabled! [" + diff + "ms]");
+        MessageUtil.log("[MChat] MChat v" + VersionUtil.VERSION + " is disabled! [" + diff + "ms]");
     }
 
     private void registerEvents(EventManager mn) {
