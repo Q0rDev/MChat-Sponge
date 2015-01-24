@@ -56,7 +56,7 @@
         </repository>
         <repository>
             <id>sponge-repo</id>
-            <url>http://repo.spongepowered.org/Sponge/maven</url>
+            <url>http://repo.spongepowered.org/maven</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>
