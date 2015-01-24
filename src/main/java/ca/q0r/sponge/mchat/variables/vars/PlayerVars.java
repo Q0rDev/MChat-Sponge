@@ -88,7 +88,7 @@ public class PlayerVars {
         public String getValue(UUID uuid) {
             Player player = ServerUtil.getPlayer(uuid);
             if (player != null) {
-                return player.getCustomName();
+                return player.getDisplayName().getContent().toString();
             }
 
             return "";
