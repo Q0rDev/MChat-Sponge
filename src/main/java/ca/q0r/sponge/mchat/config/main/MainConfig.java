@@ -15,7 +15,7 @@ public class MainConfig extends Config {
     private HashMap<String, List<String>> aliasMap = new HashMap<String, List<String>>();
 
     public MainConfig() {
-        super(new File("plugins/MChat/config.yml"));
+        super(new File("plugins/MChat/config.conf"));
     }
 
     public void loadDefaults() {
@@ -62,7 +62,7 @@ public class MainConfig extends Config {
 
     private void setupAliasMap() {
         for (Map.Entry<String, ConfigValue> entry : config.getConfig("aliases").entrySet()) {
-            aliasMap.put(entry.getKey(), config.getStringList("aliases." + entry.getValue().render()));
+            aliasMap.put(entry.getKey(), config.getStringList("aliases." + entry.getKey()));
         }
     }
 }

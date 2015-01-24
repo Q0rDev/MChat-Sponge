@@ -6,7 +6,7 @@ import java.io.File;
 
 public class LocaleConfig extends Config {
     public LocaleConfig() {
-        super(new File("plugins/MChat/locale.yml"));
+        super(new File("plugins/MChat/locale.conf"));
     }
 
     public void loadDefaults() {

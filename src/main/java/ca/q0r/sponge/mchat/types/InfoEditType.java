@@ -4,7 +4,7 @@ import ca.q0r.sponge.mchat.util.MessageUtil;
 import org.spongepowered.api.util.command.CommandSource;
 
 /**
- * Enum for Different <b>info.yml</b> Edit Types.
+ * Enum for Different <b>info.conf</b> Edit Types.
  */
 public enum InfoEditType {
     /**

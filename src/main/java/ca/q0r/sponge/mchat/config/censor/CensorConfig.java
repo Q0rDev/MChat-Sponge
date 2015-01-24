@@ -6,7 +6,7 @@ import java.io.File;
 
 public class CensorConfig extends Config {
     public CensorConfig() {
-        super(new File("plugins/MChat/censor.yml"));
+        super(new File("plugins/MChat/censor.conf"));
     }
 
     public void loadDefaults() {

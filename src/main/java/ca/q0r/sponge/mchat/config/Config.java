@@ -23,7 +23,6 @@ public abstract class Config {
      * Used to instantiate Class.
      *
      * @param file   HOCON Config File to be loaded.
-     * @param header Header Comment.
      */
     public Config(File file) {
         this.file = file;

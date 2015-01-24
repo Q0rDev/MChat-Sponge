@@ -6,7 +6,7 @@ import java.io.File;
 
 public class InfoConfig extends Config {
     public InfoConfig() {
-        super(new File("plugins/MChat/info.yml"));
+        super(new File("plugins/MChat/info.conf"));
     }
 
     public void loadDefaults() {
