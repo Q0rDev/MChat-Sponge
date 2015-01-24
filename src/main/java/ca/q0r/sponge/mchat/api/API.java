@@ -5,7 +5,10 @@ import ca.q0r.sponge.mchat.types.IndicatorType;
 import ca.q0r.sponge.mchat.types.PluginType;
 import ca.q0r.sponge.mchat.util.ServerUtil;
 import org.spongepowered.api.entity.player.Player;
-import org.spongepowered.api.util.command.CommandSource;
+import org.spongepowered.api.service.permission.PermissionService;
+import org.spongepowered.api.service.permission.Subject;
+import org.spongepowered.api.service.permission.context.Context;
+import org.spongepowered.api.world.World;
 
 import java.util.*;
 
@@ -14,6 +17,9 @@ import java.util.*;
  */
 //TODO Fix Permissions Handling
 public class API {
+    // Perm Service
+    private static PermissionService service;
+
     // Var Map
     private static final SortedMap<String, String> gVarMap = Collections.synchronizedSortedMap(new TreeMap<String, String>());
     private static final SortedMap<String, String> pVarMap = Collections.synchronizedSortedMap(new TreeMap<String, String>());
@@ -24,6 +30,7 @@ public class API {
      * Class Initializer
      */
     public static void initialize() {
+        service = ServerUtil.getGame().getServiceManager().provide(PermissionService.class).orNull();
         spying = new HashMap<String, Boolean>();
     }
 
@@ -193,21 +200,41 @@ public class API {
      * @return Player has Node.
      */
     public static Boolean checkPermissions(Player player, String node) {
-        return true;//player.hasPermission(node) || player.isOp();
+        return player.hasPermission(node);// || player.isOp();
+    }
+
+    /**
+     * Permission Checking
+     *
+     * @param player Player being checked.
+     * @param context Context of Player's World.
+     * @param node   Permission Node being checked.
+     *
+     * @return Player has Node.
+     */
+    public static Boolean checkPermissions(Player player, Context context, String node) {
+        HashSet<Context> cont = new HashSet<Context>();
+
+        cont.add(context);
+
+        return player.hasPermission(cont, node);// || player.isOp();
     }
 
     /**
      * Permission Checking
      *
      * @param pName Name of Player being checked.
-     * @param world Name of Player's World.
+     * @param wName Name of Player's World.
      * @param node  Permission Node being checked.
      *
      * @return Player has Node.
      */
     @Deprecated
-    public static Boolean checkPermissions(String pName, String world, String node) {
-        return true;//ServerUtil.getServer().getPlayer(pName).isPresent() && ServerUtil.getPlayer(pName).hasPermission(node);
+    public static Boolean checkPermissions(String pName, String wName, String node) {
+        Player player = ServerUtil.getServer().getPlayer(pName).orNull();
+        World world = ServerUtil.getServer().getWorld(wName).orNull();
+
+        return (player != null && world != null)&& checkPermissions(player, world.getContext(), node);
     }
 
     /**
@@ -226,13 +253,13 @@ public class API {
     /**
      * Permission Checking
      *
-     * @param source CommandSender being checked.
+     * @param subject Subject being checked.
      * @param node   Permission Node being checked.
      *
      * @return Sender has Node.
      */
-    public static Boolean checkPermissions(CommandSource source, String node) {
-        return true;//source.hasPermission(node);
+    public static Boolean checkPermissions(Subject subject, String node) {
+        return subject.hasPermission(node);
     }
 
     /**
