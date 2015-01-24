@@ -34,7 +34,7 @@ public class MChat {
         Timer timer = new Timer();
 
         // Initialize Game
-        ServerUtil.initialize(event.getGame(), this);
+        ServerUtil.initialize(event.getGame());
 
         // Load Config
         ConfigManager.initialize();
@@ -87,9 +87,9 @@ public class MChat {
 
     private void registerEvents(EventManager mn) {
         if (!MainType.MCHAT_API_ONLY.getBoolean()) {
-            mn.register(new ChatListener(), this);
-            mn.register(new CommandListener(), this);
-            mn.register(new PlayerListener(this), this);
+            mn.register(this, new ChatListener());
+            mn.register(this, new CommandListener());
+            mn.register(this, new PlayerListener(this));
         }
     }
 

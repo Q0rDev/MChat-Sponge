@@ -12,8 +12,8 @@ import ca.q0r.sponge.mchat.types.InfoType;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
 import org.spongepowered.api.entity.player.Player;
-import org.spongepowered.api.event.player.PlayerJoinEvent;
-import org.spongepowered.api.event.player.PlayerQuitEvent;
+import org.spongepowered.api.event.entity.living.player.PlayerJoinEvent;
+import org.spongepowered.api.event.entity.living.player.PlayerQuitEvent;
 import org.spongepowered.api.text.message.Messages;
 import org.spongepowered.api.util.event.Order;
 import org.spongepowered.api.util.event.Subscribe;
@@ -27,7 +27,7 @@ public class PlayerListener {
         plugin = instance;
     }
 
-    @Subscribe(order = Order.FIRST)
+    @Subscribe(order = Order.EARLY)
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
 
@@ -90,7 +90,7 @@ public class PlayerListener {
         }
     }*/
 
-    @Subscribe(order = Order.FIRST)
+    @Subscribe(order = Order.EARLY)
     public void onPlayerQuit(PlayerQuitEvent event) {
         UUID uuid = event.getPlayer().getUniqueId();
         String world = event.getPlayer().getWorld().getName();
