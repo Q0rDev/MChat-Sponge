@@ -1,6 +1,5 @@
 package ca.q0r.sponge.mchat.util;
 
-import ca.q0r.sponge.mchat.MChat;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.entity.player.Player;
@@ -9,12 +8,9 @@ import java.util.UUID;
 
 public class ServerUtil {
     private static Game game;
-    private static MChat plugin;
 
-    public static void initialize(Game instance, MChat mchat) {
+    public static void initialize(Game instance) {
         game = instance;
-        plugin = mchat;
-
     }
 
     public static Game getGame() {
@@ -38,10 +34,6 @@ public class ServerUtil {
     }
 
     public static Player getPlayer(UUID uuid) {
-        return getServer().getPlayer(uuid).get();
-    }
-
-    public static MChat getPlugin() {
-        return plugin;
+        return getServer().getPlayer(uuid).orNull();
     }
 }
