@@ -5,7 +5,6 @@ import ca.q0r.sponge.mchat.types.IndicatorType;
 import ca.q0r.sponge.mchat.types.PluginType;
 import ca.q0r.sponge.mchat.util.ServerUtil;
 import org.spongepowered.api.entity.player.Player;
-import org.spongepowered.api.service.permission.PermissionService;
 import org.spongepowered.api.service.permission.Subject;
 import org.spongepowered.api.service.permission.context.Context;
 import org.spongepowered.api.world.World;
@@ -15,11 +14,7 @@ import java.util.*;
 /**
  * Class used for various tasks not covered by other classes.
  */
-//TODO Fix Permissions Handling
 public class API {
-    // Perm Service
-    private static PermissionService service;
-
     // Var Map
     private static final SortedMap<String, String> gVarMap = Collections.synchronizedSortedMap(new TreeMap<String, String>());
     private static final SortedMap<String, String> pVarMap = Collections.synchronizedSortedMap(new TreeMap<String, String>());
@@ -30,7 +25,6 @@ public class API {
      * Class Initializer
      */
     public static void initialize() {
-        service = ServerUtil.getGame().getServiceManager().provide(PermissionService.class).orNull();
         spying = new HashMap<String, Boolean>();
     }
 
@@ -206,9 +200,9 @@ public class API {
     /**
      * Permission Checking
      *
-     * @param player Player being checked.
+     * @param player  Player being checked.
      * @param context Context of Player's World.
-     * @param node   Permission Node being checked.
+     * @param node    Permission Node being checked.
      *
      * @return Player has Node.
      */
@@ -234,7 +228,7 @@ public class API {
         Player player = ServerUtil.getServer().getPlayer(pName).orNull();
         World world = ServerUtil.getServer().getWorld(wName).orNull();
 
-        return (player != null && world != null)&& checkPermissions(player, world.getContext(), node);
+        return (player != null && world != null) && checkPermissions(player, world.getContext(), node);
     }
 
     /**
@@ -254,7 +248,7 @@ public class API {
      * Permission Checking
      *
      * @param subject Subject being checked.
-     * @param node   Permission Node being checked.
+     * @param node    Permission Node being checked.
      *
      * @return Sender has Node.
      */
