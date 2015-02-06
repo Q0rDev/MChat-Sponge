@@ -21,7 +21,6 @@ import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.event.state.ServerStartingEvent;
 import org.spongepowered.api.event.state.ServerStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
-import org.spongepowered.api.service.command.CommandService;
 import org.spongepowered.api.service.event.EventManager;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.event.Subscribe;
@@ -43,10 +42,10 @@ public class MChat {
         initializeClasses();
 
         // Register Events
-        registerEvents(ServerUtil.getGame().getEventManager());
+        registerEvents();
 
         // Setup Commands
-        setupCommands(ServerUtil.getGame().getCommandDispatcher());
+        setupCommands();
 
         // Add All Players To Info Config
         if (MainType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
@@ -85,25 +84,27 @@ public class MChat {
         MessageUtil.log("[MChat] MChat v" + VersionUtil.VERSION + " is disabled! [" + diff + "ms]");
     }
 
-    private void registerEvents(EventManager mn) {
+    private void registerEvents() {
         if (!MainType.MCHAT_API_ONLY.getBoolean()) {
+            EventManager mn = ServerUtil.getGame().getEventManager();
+
             mn.register(this, new ChatListener());
             mn.register(this, new CommandListener());
             mn.register(this, new PlayerListener(this));
         }
     }
 
-    private void setupCommands(CommandService cd) {
-        regCommands(cd, new MChatCommand(), "mchat");
+    private void setupCommands() {
+        regCommands(new MChatCommand(), "mchat");
 
-        regCommands(cd, new InfoAlterCommand("mchatuser", InfoType.USER), "mchatuser", "muser");
-        regCommands(cd, new InfoAlterCommand("mchatgroup", InfoType.GROUP), "mchatgroup", "mgroup");
+        regCommands(new InfoAlterCommand("mchatuser", InfoType.USER), "mchatuser", "muser");
+        regCommands(new InfoAlterCommand("mchatgroup", InfoType.GROUP), "mchatgroup", "mgroup");
 
-        regCommands(cd, new MeCommand(), "mchatme");
+        regCommands(new MeCommand(), "mchatme");
     }
 
-    private void regCommands(CommandService cd, CommandCallable callable, String... aliases) {
-        cd.register(this, callable, aliases);
+    private void regCommands(CommandCallable callable, String... aliases) {
+        ServerUtil.getGame().getCommandDispatcher().register(this, callable, aliases);
     }
 
     private void initializeClasses() {

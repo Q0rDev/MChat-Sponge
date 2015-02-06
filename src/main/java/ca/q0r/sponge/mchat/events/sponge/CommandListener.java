@@ -28,7 +28,8 @@ public class CommandListener {
                     try {
                         ServerUtil.getGame().getCommandDispatcher().call(event.getSource(), event.getArguments(), list);
                         event.setCancelled(true);
-                    } catch (Exception ignored) { }
+                    } catch (Exception ignored) {
+                    }
 
                     return;
                 }

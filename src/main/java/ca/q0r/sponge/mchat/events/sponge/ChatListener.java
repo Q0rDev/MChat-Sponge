@@ -12,7 +12,8 @@ import org.spongepowered.api.util.event.Subscribe;
 import java.util.UUID;
 
 public class ChatListener {
-    public ChatListener() { }
+    public ChatListener() {
+    }
 
     @Subscribe(order = Order.EARLY)
     public void onPlayerChat(PlayerChatEvent event) {
