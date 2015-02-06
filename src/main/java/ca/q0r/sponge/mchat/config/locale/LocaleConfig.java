@@ -2,11 +2,9 @@ package ca.q0r.sponge.mchat.config.locale;
 
 import ca.q0r.sponge.mchat.config.Config;
 
-import java.io.File;
-
 public class LocaleConfig extends Config {
     public LocaleConfig() {
-        super(new File("plugins/MChat/locale.conf"));
+        super("locale.conf");
     }
 
     public void loadDefaults() {

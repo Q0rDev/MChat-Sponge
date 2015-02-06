@@ -3,6 +3,7 @@ package ca.q0r.sponge.mchat.config.main;
 import ca.q0r.sponge.mchat.config.ConfigManager;
 import ca.q0r.sponge.mchat.config.ConfigType;
 import ca.q0r.sponge.mchat.util.MessageUtil;
+import com.google.common.base.Functions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +90,7 @@ public enum MainType {
      * @return Boolean Value of Config Key.
      */
     public Boolean getBoolean() {
-        return ConfigManager.getConfig(ConfigType.CONFIG_HOCON).getConfig().getBoolean(option);
+        return ConfigManager.getConfig(ConfigType.CONFIG_HOCON).getConfig().getNode(option).getBoolean();
     }
 
     /**
@@ -98,7 +99,7 @@ public enum MainType {
      * @return String Value of Config Key.
      */
     public String getString() {
-        return MessageUtil.addColour(ConfigManager.getConfig(ConfigType.CONFIG_HOCON).getConfig().getString(option));
+        return MessageUtil.addColour(ConfigManager.getConfig(ConfigType.CONFIG_HOCON).getConfig().getNode(option).getString());
     }
 
     /**
@@ -107,7 +108,7 @@ public enum MainType {
      * @return Integer Value of Config Key.
      */
     public Integer getInteger() {
-        return ConfigManager.getConfig(ConfigType.CONFIG_HOCON).getConfig().getInt(option);
+        return ConfigManager.getConfig(ConfigType.CONFIG_HOCON).getConfig().getNode(option).getInt();
     }
 
     /**
@@ -116,7 +117,7 @@ public enum MainType {
      * @return Double Value of Config Key.
      */
     public Double getDouble() {
-        return ConfigManager.getConfig(ConfigType.CONFIG_HOCON).getConfig().getDouble(option);
+        return ConfigManager.getConfig(ConfigType.CONFIG_HOCON).getConfig().getNode(option).getDouble();
     }
 
     /**
@@ -125,7 +126,7 @@ public enum MainType {
      * @return List Value of Config Key.
      */
     public List<String> getList() {
-        List<String> list = ConfigManager.getConfig(ConfigType.CONFIG_HOCON).getConfig().getStringList(option);
+        List<String> list = ConfigManager.getConfig(ConfigType.CONFIG_HOCON).getConfig().getNode(option).getList(Functions.toStringFunction());
         List<String> l = new ArrayList<String>();
 
         for (String string : list) {

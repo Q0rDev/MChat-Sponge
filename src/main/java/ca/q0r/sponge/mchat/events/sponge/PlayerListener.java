@@ -35,7 +35,7 @@ public class PlayerListener {
         UUID uuid = player.getUniqueId();
 
         if (MainType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
-            if (!ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig().hasPath("users." + uuid)) {
+            if (ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig().getNode("users." + uuid).isVirtual()) {
                 Writer.addBase(uuid.toString(), InfoType.USER);
             }
         }

@@ -1,10 +1,15 @@
 package ca.q0r.sponge.mchat.config;
 
 
+import ca.q0r.sponge.mchat.util.MessageUtil;
+import ca.q0r.sponge.mchat.util.ServerUtil;
 import com.typesafe.config.ConfigValueFactory;
-import org.spongepowered.api.util.config.ConfigFile;
+import ninja.leaping.configurate.ConfigurationNode;
+import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
+import ninja.leaping.configurate.loader.ConfigurationLoader;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Parent class for all HOCON configs.
@@ -13,7 +18,8 @@ public abstract class Config {
     /**
      * HOCON Config
      */
-    public ConfigFile config;
+    public ConfigurationLoader loader;
+    public ConfigurationNode config;
     /**
      * Config File
      */
@@ -22,16 +28,19 @@ public abstract class Config {
     /**
      * Used to instantiate Class.
      *
-     * @param file   HOCON Config File to be loaded.
+     * @param name Name of HOCON Config File to be loaded.
      */
-    public Config(File file) {
-        this.file = file;
+    public Config(String name) {
+        this.file = new File(ServerUtil.getConfigDir(), name);
 
-        config = ConfigFile.parseFile(file);
+        loader = HoconConfigurationLoader.builder().setFile(file).build();
 
-        //TODO Fix Config
-        //config.options().indent(4);
-        //config.options().header(header);
+        try {
+            config = loader.load();
+        } catch (IOException e) {
+            MessageUtil.logFormatted("Issues loading: " + file.getName());
+            MessageUtil.logFormatted(e.getStackTrace());
+        }
     }
 
     /**
@@ -46,14 +55,19 @@ public abstract class Config {
      * @param obj Value to be set.
      */
     public void set(String key, Object obj) {
-        config = config.withValue(key, ConfigValueFactory.fromAnyRef(obj));
+        config = config.getNode(key).setValue(ConfigValueFactory.fromAnyRef(obj));
     }
 
     /**
      * Writes config to disk.
      */
     public void save() {
-        config.save(true);
+        try {
+            loader.save(config);
+        } catch (IOException e) {
+            MessageUtil.logFormatted("Issues saving: " + file.getName());
+            MessageUtil.logFormatted(e.getStackTrace());
+        }
     }
 
     /**
@@ -61,7 +75,7 @@ public abstract class Config {
      *
      * @return HOCON File loaded from Disk.
      */
-    public ConfigFile getConfig() {
+    public ConfigurationNode getConfig() {
         return config;
     }
 
@@ -72,7 +86,7 @@ public abstract class Config {
      * @param defValue Value to set if Key is not found.
      */
     public void checkOption(String option, Object defValue) {
-        if (!config.hasPath(option)) {
+        if (config.getNode(option).isVirtual()) {
             set(option, defValue);
         }
     }
@@ -84,8 +98,8 @@ public abstract class Config {
      * @param newOption Key to change to if found.
      */
     public void editOption(String oldOption, String newOption) {
-        if (config.hasPath(oldOption)) {
-            set(newOption, config.getAnyRef(oldOption));
+        if (!config.getNode(oldOption).isVirtual()) {
+            set(newOption, config.getNode(oldOption).getValue());
             set(oldOption, null);
         }
     }
@@ -96,7 +110,7 @@ public abstract class Config {
      * @param option Key to remove if found.
      */
     public void removeOption(String option) {
-        if (config.hasPath(option)) {
+        if (!config.getNode(option).isVirtual()) {
             set(option, null);
         }
     }

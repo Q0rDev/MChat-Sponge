@@ -8,8 +8,7 @@ import ca.q0r.sponge.mchat.types.PluginType;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
 import com.google.common.collect.Iterables;
-import com.typesafe.config.ConfigValue;
-import org.spongepowered.api.util.config.ConfigFile;
+import ninja.leaping.configurate.ConfigurationNode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -142,19 +141,19 @@ public class Reader {
             return getMChatGroup(uuid);
         }
 
-        ConfigFile infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
+        ConfigurationNode infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
 
-        if (infoConfig.hasPath("users." + uuid.toString() + ".info." + info)) {
-            return infoConfig.getString("users." + uuid.toString() + ".info." + info);
-        } else if (infoConfig.hasPath("users." + uuid.toString() + ".worlds." + world + "." + info)) {
-            return infoConfig.getString("users." + uuid.toString() + ".worlds." + world + "." + info);
-        } else if (infoConfig.hasPath("users." + uuid.toString() + ".group")) {
-            String group = infoConfig.getString("users." + uuid.toString() + ".group");
+        if (!infoConfig.getNode("users." + uuid.toString() + ".info." + info).isVirtual()) {
+            return infoConfig.getNode("users." + uuid.toString() + ".info." + info).getString();
+        } else if (!infoConfig.getNode("users." + uuid.toString() + ".worlds." + world + "." + info).isVirtual()) {
+            return infoConfig.getNode("users." + uuid.toString() + ".worlds." + world + "." + info).getString();
+        } else if (!infoConfig.getNode("users." + uuid.toString() + ".group").isVirtual()) {
+            String group = infoConfig.getNode("users." + uuid.toString() + ".group").getString();
 
-            if (infoConfig.hasPath("groups." + group + ".info." + info)) {
-                return infoConfig.getString("groups." + group + ".info." + info);
-            } else if (infoConfig.hasPath("groups." + group + ".worlds." + world + "." + info)) {
-                return infoConfig.getString("groups." + group + ".worlds." + world + "." + info);
+            if (!infoConfig.getNode("groups." + group + ".info." + info).isVirtual()) {
+                return infoConfig.getNode("groups." + group + ".info." + info).getString();
+            } else if (!infoConfig.getNode("groups." + group + ".worlds." + world + "." + info).isVirtual()) {
+                return infoConfig.getNode("groups." + group + ".worlds." + world + "." + info).getString();
             }
         }
 
@@ -162,38 +161,40 @@ public class Reader {
     }
 
     private static String getMChatGroup(UUID uuid) {
-        ConfigFile infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
+        ConfigurationNode infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
 
-        if (infoConfig.hasPath("users." + uuid.toString() + ".group")) {
-            return infoConfig.getString("users." + uuid.toString() + ".group");
+        if (!infoConfig.getNode("users." + uuid.toString() + ".group").isVirtual()) {
+            return infoConfig.getNode("users." + uuid.toString() + ".group").getString();
         }
 
         return "";
     }
 
     private static String getLeveledInfo(UUID uuid, String info) {
-        ConfigFile infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
+        ConfigurationNode infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
         HashMap<Integer, String> iMap = new HashMap<Integer, String>();
 
-        if (!infoConfig.hasPath("mchat." + info)) {
+        if (infoConfig.getNode("mchat." + info).isVirtual()) {
             return "";
         }
 
-        if (!infoConfig.hasPath("rank." + info)) {
+        if (infoConfig.getNode("rank." + info).isVirtual()) {
             return getSpongeInfo(uuid, info);
         }
 
-        for (Map.Entry<String, ConfigValue> entry : infoConfig.entrySet()) {
-            if (entry.getKey().contains("mchat." + info + ".")) {
-                if (API.checkPermissions(uuid, entry.getKey())) {
-                    String rVal = entry.getKey().replaceFirst("mchat\\.", "rank.");
+        for (Map.Entry<Object, ? extends ConfigurationNode> entry : infoConfig.getChildrenMap().entrySet()) {
+            String key = entry.getKey().toString();
 
-                    if (!infoConfig.hasPath(rVal)) {
+            if (key.contains("mchat." + info + ".")) {
+                if (API.checkPermissions(uuid, key)) {
+                    String rVal = key.replaceFirst("mchat\\.", "rank.");
+
+                    if (infoConfig.getNode(rVal).isVirtual()) {
                         continue;
                     }
 
                     try {
-                        iMap.put(infoConfig.getInt(rVal), entry.getValue().toString());
+                        iMap.put(infoConfig.getNode(rVal).getInt(), entry.getValue().getString());
                     } catch (NumberFormatException ignored) {
                     }
                 }
@@ -210,16 +211,18 @@ public class Reader {
     }
 
     private static String getSpongeInfo(UUID uuid, String info) {
-        ConfigFile infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
+        ConfigurationNode infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
 
-        if (!infoConfig.hasPath("mchat." + info)) {
+        if (infoConfig.getNode("mchat." + info).isVirtual()) {
             return "";
         }
 
-        for (Map.Entry<String, ConfigValue> entry : infoConfig.entrySet()) {
-            if (entry.getKey().contains("mchat." + info + ".")) {
-                if (API.checkPermissions(uuid, entry.getKey())) {
-                    String infoResolve = entry.getValue().render();
+        for (Map.Entry<Object, ? extends ConfigurationNode> entry : infoConfig.getChildrenMap().entrySet()) {
+            String key = entry.getKey().toString();
+
+            if (key.contains("mchat." + info + ".")) {
+                if (API.checkPermissions(uuid, key)) {
+                    String infoResolve = entry.getValue().getString();
 
                     if (infoResolve != null && !info.isEmpty()) {
                         return infoResolve;
@@ -241,14 +244,14 @@ public class Reader {
      * @return Group Name's Alias.
      */
     public static String getGroupName(String group) {
-        ConfigFile infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
+        ConfigurationNode infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
 
         if (group.isEmpty()) {
             return "";
         }
 
-        if (infoConfig.hasPath("groupnames." + group)) {
-            return infoConfig.getString("groupnames." + group);
+        if (!infoConfig.getNode("groupnames." + group).isVirtual()) {
+            return infoConfig.getNode("groupnames." + group).getString();
         }
 
         return group;
@@ -262,14 +265,14 @@ public class Reader {
      * @return World Name's Alias.
      */
     public static String getWorldName(String world) {
-        ConfigFile infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
+        ConfigurationNode infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
 
         if (world.isEmpty()) {
             return "";
         }
 
-        if (infoConfig.hasPath("worldnames." + world)) {
-            return infoConfig.getString("worldnames." + world);
+        if (!infoConfig.getNode("worldnames." + world).isVirtual()) {
+            return infoConfig.getNode("worldnames." + world).getString();
         }
 
         return world;
@@ -283,11 +286,11 @@ public class Reader {
      * @return Player Name's MChat Alias.
      */
     public static String getMName(UUID uuid) {
-        ConfigFile infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
+        ConfigurationNode infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
 
-        if (infoConfig.hasPath("mname." + uuid)) {
-            if (!(infoConfig.getString("mname." + uuid).isEmpty())) {
-                return infoConfig.getString("mname." + uuid);
+        if (!infoConfig.getNode("mname." + uuid).isVirtual()) {
+            if (!(infoConfig.getNode("mname." + uuid).getString().isEmpty())) {
+                return infoConfig.getNode("mname." + uuid).getString();
             }
         }
 

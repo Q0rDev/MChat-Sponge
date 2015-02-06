@@ -79,8 +79,8 @@ public enum LocaleType {
      * @return Retrieves Raw Value.
      */
     public String getRaw() {
-        if (ConfigManager.getConfig(ConfigType.LOCALE_HOCON).getConfig().hasPath(option)) {
-            return ConfigManager.getConfig(ConfigType.LOCALE_HOCON).getConfig().getString(option);
+        if (!ConfigManager.getConfig(ConfigType.LOCALE_HOCON).getConfig().getNode(option).isVirtual()) {
+            return ConfigManager.getConfig(ConfigType.LOCALE_HOCON).getConfig().getNode(option).getString();
         }
 
         return "Locale Option '" + option + "' not found!";

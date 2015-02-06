@@ -8,8 +8,8 @@ import ca.q0r.sponge.mchat.config.main.MainType;
 import ca.q0r.sponge.mchat.types.IndicatorType;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.variables.VariableManager;
-import com.typesafe.config.ConfigValue;
 import com.typesafe.config.ConfigValueType;
+import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.util.event.Event;
 import org.spongepowered.api.util.event.callback.CallbackList;
 
@@ -178,8 +178,8 @@ public class ParseEvent implements Event {
             msg = replacer(msg, "([0-9]{1,3}\\.){3}([0-9]{1,3})", "*.*.*.*");
         }
 
-        for (Map.Entry<String, ConfigValue> entry : ConfigManager.getConfig(ConfigType.CENSOR_HOCON).getConfig().entrySet()) {
-            if (entry.getValue().valueType() != ConfigValueType.STRING) {
+        for (Map.Entry<Object, ? extends ConfigurationNode> entry : ConfigManager.getConfig(ConfigType.CENSOR_HOCON).getConfig().getChildrenMap().entrySet()) {
+            if (entry.getValue().getValue() != ConfigValueType.STRING) {
                 continue;
             }
 

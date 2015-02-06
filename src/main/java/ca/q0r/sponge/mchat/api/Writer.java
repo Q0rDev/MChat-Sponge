@@ -64,7 +64,7 @@ public class Writer {
         Config config = ConfigManager.getConfig(ConfigType.INFO_HOCON);
         String base = type.getConfValue();
 
-        if (!config.getConfig().hasPath(base + "." + name)) {
+        if (config.getConfig().getNode(base + "." + name).isVirtual()) {
             addBase(name, type);
         }
 
@@ -86,7 +86,7 @@ public class Writer {
         Config config = ConfigManager.getConfig(ConfigType.INFO_HOCON);
         String base = type.getConfValue();
 
-        if (!config.getConfig().hasPath(base + "." + name)) {
+        if (config.getConfig().getNode(base + "." + name).isVirtual()) {
             addBase(name, type);
         }
 
@@ -108,7 +108,7 @@ public class Writer {
         Config config = ConfigManager.getConfig(ConfigType.INFO_HOCON);
         String base = type.getConfValue();
 
-        if (!config.getConfig().hasPath(base + "." + name + ".worlds." + world)) {
+        if (config.getConfig().getNode(base + "." + name + ".worlds." + world).isVirtual()) {
             addWorld(name, type, world);
         }
 
@@ -126,7 +126,7 @@ public class Writer {
     public static void setGroup(String uuid, String group) {
         Config config = ConfigManager.getConfig(ConfigType.INFO_HOCON);
 
-        if (!config.getConfig().hasPath(uuid + "." + group)) {
+        if (config.getConfig().getNode(uuid + "." + group).isVirtual()) {
             addBase(uuid, group);
         }
 
@@ -145,7 +145,7 @@ public class Writer {
         Config config = ConfigManager.getConfig(ConfigType.INFO_HOCON);
         String base = type.getConfValue();
 
-        if (config.getConfig().hasPath(base + "." + name)) {
+        if (!config.getConfig().getNode(base + "." + name).isVirtual()) {
             config.set(base + "." + name, null);
 
             save();
@@ -174,8 +174,8 @@ public class Writer {
         Config config = ConfigManager.getConfig(ConfigType.INFO_HOCON);
         String base = type.getConfValue();
 
-        if (config.getConfig().hasPath(base + "." + name)
-                && config.getConfig().hasPath(base + "." + name + ".worlds." + world)) {
+        if (!config.getConfig().getNode(base + "." + name).isVirtual()
+                && !config.getConfig().getNode(base + "." + name + ".worlds." + world).isVirtual()) {
             config.set(base + "." + name + ".worlds." + world, null);
 
             save();
@@ -205,8 +205,8 @@ public class Writer {
         String uuid = player.getUniqueId().toString();
         String name = player.getName();
 
-        if (config.getConfig().hasPath(base + "." + name)) {
-            config.set(base + "." + uuid, config.getConfig().atKey(base + "." + name));
+        if (!config.getConfig().getNode(base + "." + name).isVirtual()) {
+            config.set(base + "." + uuid, config.getConfig().getNode(base + "." + name));
             config.set(base + "." + name, null);
 
             save();
@@ -216,7 +216,7 @@ public class Writer {
     private static void checkGroup(String group) {
         Config config = ConfigManager.getConfig(ConfigType.INFO_HOCON);
 
-        if (!config.getConfig().hasPath("groups." + group)) {
+        if (config.getConfig().getNode("groups." + group).isVirtual()) {
             config.set("groups." + group + ".info.prefix", "");
             config.set("groups." + group + ".info.suffix", "");
 

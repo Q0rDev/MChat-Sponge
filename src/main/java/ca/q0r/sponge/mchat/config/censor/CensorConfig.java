@@ -2,11 +2,9 @@ package ca.q0r.sponge.mchat.config.censor;
 
 import ca.q0r.sponge.mchat.config.Config;
 
-import java.io.File;
-
 public class CensorConfig extends Config {
     public CensorConfig() {
-        super(new File("plugins/MChat/censor.conf"));
+        super("censor.conf");
     }
 
     public void loadDefaults() {

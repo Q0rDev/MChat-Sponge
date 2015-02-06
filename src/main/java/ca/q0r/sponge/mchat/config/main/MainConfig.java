@@ -1,9 +1,9 @@
 package ca.q0r.sponge.mchat.config.main;
 
 import ca.q0r.sponge.mchat.config.Config;
-import com.typesafe.config.ConfigValue;
+import com.google.common.base.Functions;
+import ninja.leaping.configurate.ConfigurationNode;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +15,7 @@ public class MainConfig extends Config {
     private HashMap<String, List<String>> aliasMap = new HashMap<String, List<String>>();
 
     public MainConfig() {
-        super(new File("plugins/MChat/config.conf"));
+        super("config.conf");
     }
 
     public void loadDefaults() {
@@ -61,8 +61,8 @@ public class MainConfig extends Config {
     }
 
     private void setupAliasMap() {
-        for (Map.Entry<String, ConfigValue> entry : config.getConfig("aliases").entrySet()) {
-            aliasMap.put(entry.getKey(), config.getStringList("aliases." + entry.getKey()));
+        for (Map.Entry<Object, ? extends ConfigurationNode> entry : config.getNode("aliases").getChildrenMap().entrySet()) {
+            aliasMap.put(entry.getKey().toString(), config.getNode("aliases." + entry.getKey()).getList(Functions.toStringFunction()));
         }
     }
 }

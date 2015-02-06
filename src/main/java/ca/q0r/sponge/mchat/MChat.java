@@ -34,7 +34,7 @@ public class MChat {
         Timer timer = new Timer();
 
         // Initialize Game
-        ServerUtil.initialize(event.getGame());
+        ServerUtil.initialize(this, event.getGame());
 
         // Load Config
         ConfigManager.initialize();
@@ -51,7 +51,7 @@ public class MChat {
         // Add All Players To Info Config
         if (MainType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
             for (Player player : ServerUtil.getGame().getServer().get().getOnlinePlayers()) {
-                if (!ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig().hasPath("users." + player.getUniqueId().toString())) {
+                if (!ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig().getNode("users." + player.getUniqueId().toString()).getBoolean()) {
                     Writer.addBase(player.getUniqueId().toString(), InfoType.USER);
                 }
             }
