@@ -71,7 +71,7 @@ public class MChat {
         // Initialize and Start the Timer
         Timer timer = new Timer();
 
-        event.getGame().getScheduler().getScheduledTasks().clear();
+        event.getGame().getSyncScheduler().getScheduledTasks().clear();
 
         // Unload Config
         ConfigManager.unload();

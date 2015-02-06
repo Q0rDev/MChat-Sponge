@@ -42,7 +42,7 @@ public class PlayerListener {
 
 
         if (MainType.MCHAT_ALTER_LIST.getBoolean()) {
-            event.getGame().getScheduler().runTaskAfter(plugin, new Runnable() {
+            event.getGame().getSyncScheduler().runTaskAfter(plugin, new Runnable() {
                 public void run() {
                     setCustomName(player);
                 }
