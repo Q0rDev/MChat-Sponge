@@ -9,36 +9,36 @@ public class InfoConfig extends Config {
 
     public void loadDefaults() {
         if (config.getNode("users").isVirtual()) {
-            set("users.MiracleM4n.group", "admin");
-            set("users.MiracleM4n.worlds.DtK.prefix", "");
-            set("users.MiracleM4n.info.suffix", "");
-            set("users.MiracleM4n.info.prefix", "");
+            set(new String[] {"users", "MiracleM4n", "group"}, "admin");
+            set(new String[] {"users", "MiracleM4n", "worlds", "DtK", "prefix"}, "");
+            set(new String[] {"users", "MiracleM4n", "info", "suffix"}, "");
+            set(new String[] {"users", "MiracleM4n", "info", "prefix"}, "");
         }
 
         if (config.getNode("groups").isVirtual()) {
-            set("groups.admin.worlds.DtK.prefix", "");
-            set("groups.admin.info.prefix", "");
-            set("groups.admin.info.suffix", "");
-            set("groups.admin.info.custVar", "");
+            set(new String[] {"groups", "admin", "worlds", "DtK", "prefix"}, "");
+            set(new String[] {"groups", "admin", "info", "prefix"}, "");
+            set(new String[] {"groups", "admin", "info", "suffix"}, "");
+            set(new String[] {"groups", "admin", "info", "custVar"}, "");
         }
 
         if (config.getNode("groupnames").isVirtual()) {
-            set("groupnames.admin", "[a]");
-            set("groupnames.sadmin", "[sa]");
-            set("groupnames.jadmin", "[ja]");
-            set("groupnames.member", "[m]");
+            set(new String[] {"groupnames", "admin"}, "[a]");
+            set(new String[] {"groupnames", "sadmin"}, "[sa]");
+            set(new String[] {"groupnames", "jadmin"}, "[ja]");
+            set(new String[] {"groupnames", "member"}, "[m]");
         }
 
         if (config.getNode("worldnames").isVirtual()) {
-            set("worldnames.D3GN", "[D]");
-            set("worldnames.DtK", "[DtK]");
-            set("worldnames.Nether", "[N]");
-            set("worldnames.Hello", "[H]");
+            set(new String[] {"worldnames", "D3GN"}, "[D]");
+            set(new String[] {"worldnames", "DtK"}, "[DtK]");
+            set(new String[] {"worldnames", "Nether"}, "[N]");
+            set(new String[] {"worldnames", "Hello"}, "[H]");
         }
 
         if (config.getNode("mname").isVirtual()) {
-            set("mname.MiracleM4n", "M1r4c13M4n");
-            set("mname.Jessica_RS", "M1r4c13M4n's Woman");
+            set(new String[] {"mname", "MiracleM4n"}, "M1r4c13M4n");
+            set(new String[] {"mname", "Jessica_RS"}, "M1r4c13M4n's Woman");
         }
 
         save();

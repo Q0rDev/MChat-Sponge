@@ -2,8 +2,6 @@ package ca.q0r.sponge.mchat.config;
 
 
 import ca.q0r.sponge.mchat.util.MessageUtil;
-import ca.q0r.sponge.mchat.util.ServerUtil;
-import com.typesafe.config.ConfigValueFactory;
 import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
@@ -20,6 +18,7 @@ public abstract class Config {
      */
     public ConfigurationLoader loader;
     public ConfigurationNode config;
+
     /**
      * Config File
      */
@@ -31,7 +30,16 @@ public abstract class Config {
      * @param name Name of HOCON Config File to be loaded.
      */
     public Config(String name) {
-        this.file = new File(ServerUtil.getConfigDir(), name);
+        this.file = new File("plugins/MChat/", name);
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                MessageUtil.logFormatted("Issues creating file: " + file.getName());
+                e.printStackTrace();
+            }
+        }
 
         loader = HoconConfigurationLoader.builder().setFile(file).build();
 
@@ -39,7 +47,7 @@ public abstract class Config {
             config = loader.load();
         } catch (IOException e) {
             MessageUtil.logFormatted("Issues loading: " + file.getName());
-            MessageUtil.logFormatted(e.getStackTrace());
+            e.printStackTrace();
         }
     }
 
@@ -49,13 +57,13 @@ public abstract class Config {
     public abstract void loadDefaults();
 
     /**
-     * Sets key / value pair to config.
+     * Sets node / value pair to config.
      *
-     * @param key Key to be set.
-     * @param obj Value to be set.
+     * @param node Key to be set.
+     * @param value Value to be set.
      */
-    public void set(String key, Object obj) {
-        config = config.getNode(key).setValue(ConfigValueFactory.fromAnyRef(obj));
+    public void set(Object[] node, Object value) {
+        config.getChild(node).setValue(value);
     }
 
     /**
@@ -66,7 +74,7 @@ public abstract class Config {
             loader.save(config);
         } catch (IOException e) {
             MessageUtil.logFormatted("Issues saving: " + file.getName());
-            MessageUtil.logFormatted(e.getStackTrace());
+            e.printStackTrace();
         }
     }
 
@@ -80,38 +88,38 @@ public abstract class Config {
     }
 
     /**
-     * Check if Option is Set, if not set Value.
+     * Check if Node is Set, if not set Value.
      *
-     * @param option   Key to check.
-     * @param defValue Value to set if Key is not found.
+     * @param node   Node to check.
+     * @param defValue Value to set if Node is not found.
      */
-    public void checkOption(String option, Object defValue) {
-        if (config.getNode(option).isVirtual()) {
-            set(option, defValue);
+    public void checkNode(Object[] node, Object defValue) {
+        if (config.getNode(node).isVirtual()) {
+            set(node, defValue);
         }
     }
 
     /**
-     * Edit Key.
+     * Edit Node.
      *
-     * @param oldOption Key to be changed.
-     * @param newOption Key to change to if found.
+     * @param oldNode Node to be changed.
+     * @param newNode Node to change to if found.
      */
-    public void editOption(String oldOption, String newOption) {
-        if (!config.getNode(oldOption).isVirtual()) {
-            set(newOption, config.getNode(oldOption).getValue());
-            set(oldOption, null);
+    public void editNode(Object[] oldNode, String[] newNode) {
+        if (!config.getNode(oldNode).isVirtual()) {
+            set(newNode, config.getNode(oldNode).getValue());
+            set(oldNode, null);
         }
     }
 
     /**
-     * Remove Key / Value.
+     * Remove Node / Value.
      *
-     * @param option Key to remove if found.
+     * @param node Node to remove if found.
      */
-    public void removeOption(String option) {
-        if (!config.getNode(option).isVirtual()) {
-            set(option, null);
+    public void removeOption(Object[] node) {
+        if (!config.getNode(node).isVirtual()) {
+            set(node, null);
         }
     }
 }
