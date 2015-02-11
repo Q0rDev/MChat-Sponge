@@ -8,25 +8,25 @@ public class LocaleConfig extends Config {
     }
 
     public void loadDefaults() {
-        checkNode(new String[] {"format", "forward"}, "[F]");
-        checkNode(new String[] {"format", "local"}, "[L]");
-        checkNode(new String[] {"format", "spy"}, "[Spy]");
+        checkNode(new Object[] {"format", "forward"}, "[F]");
+        checkNode(new Object[] {"format", "local"}, "[L]");
+        checkNode(new Object[] {"format", "spy"}, "[Spy]");
 
-        checkNode(new String[] {"format", "chat"}, "+p+dn+s&f: +m");
-        checkNode(new String[] {"format", "date"}, "HH:mm:ss");
-        checkNode(new String[] {"format", "name"}, "+p+dn+s&e");
-        checkNode(new String[] {"format", "custom-name"}, "+p+dn+s");
-        checkNode(new String[] {"format", "list-cmd"}, "+p+dn+s");
-        checkNode(new String[] {"format", "me"}, "* +p+dn+s&e +m");
+        checkNode(new Object[] {"format", "chat"}, "+p+dn+s&f: +m");
+        checkNode(new Object[] {"format", "date"}, "HH:mm:ss");
+        checkNode(new Object[] {"format", "name"}, "+p+dn+s&e");
+        checkNode(new Object[] {"format", "custom-name"}, "+p+dn+s");
+        checkNode(new Object[] {"format", "list-cmd"}, "+p+dn+s");
+        checkNode(new Object[] {"format", "me"}, "* +p+dn+s&e +m");
 
-        checkNode(new String[] {"message", "general", "no-perms"}, "You do not have '%permission'.");
-        checkNode(new String[] {"message", "info", "alteration"}, "Info Alteration Successful.");
-        checkNode(new String[] {"message", "player", "still-afk"}, "You are still AFK.");
-        checkNode(new String[] {"message", "event", "join"}, "%player has joined the game.");
-        checkNode(new String[] {"message", "event", "leave"}, "%player has left the game.");
-        checkNode(new String[] {"message", "event", "kick"}, "%player has been kicked from the game. [ %reason ]");
-        checkNode(new String[] {"message", "heroes", "is-master"}, "The Great");
-        checkNode(new String[] {"message", "heroes", "not-master"}, "The Squire");
+        checkNode(new Object[] {"message", "general", "no-perms"}, "You do not have '%permission'.");
+        checkNode(new Object[] {"message", "info", "alteration"}, "Info Alteration Successful.");
+        checkNode(new Object[] {"message", "player", "still-afk"}, "You are still AFK.");
+        checkNode(new Object[] {"message", "event", "join"}, "%player has joined the game.");
+        checkNode(new Object[] {"message", "event", "leave"}, "%player has left the game.");
+        checkNode(new Object[] {"message", "event", "kick"}, "%player has been kicked from the game. [ %reason ]");
+        checkNode(new Object[] {"message", "heroes", "is-master"}, "The Great");
+        checkNode(new Object[] {"message", "heroes", "not-master"}, "The Squire");
 
         save();
     }

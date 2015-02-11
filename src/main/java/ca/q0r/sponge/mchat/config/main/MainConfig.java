@@ -16,34 +16,33 @@ public class MainConfig extends Config {
     }
 
     public void loadDefaults() {
-        checkNode(new String[] {"mchat", "api-only"}, false);
-        checkNode(new String[] {"mchat", "update-check"}, true);
-        checkNode(new String[] {"mchat", "alter", "events"}, true);
-        checkNode(new String[] {"mchat", "alter", "list"}, true);
-        checkNode(new String[] {"mchat", "chat-distance"}, -1.0);
-        checkNode(new String[] {"mchat", "var-indicator"}, "+");
-        checkNode(new String[] {"mchat", "cus-var-indicator"}, "-");
-        checkNode(new String[] {"mchat", "locale-var-indicator"}, "%");
-        checkNode(new String[] {"mchat", "ip-censor"}, true);
-        checkNode(new String[] {"mchat", "caps-lock-range"}, 3);
+        checkNode(new Object[] {"mchat", "api-only"}, false);
+        checkNode(new Object[] {"mchat", "update-check"}, true);
+        checkNode(new Object[] {"mchat", "alter", "events"}, true);
+        checkNode(new Object[] {"mchat", "alter", "list"}, true);
+        checkNode(new Object[] {"mchat", "chat-distance"}, -1.0);
+        checkNode(new Object[] {"mchat", "var-indicator"}, "+");
+        checkNode(new Object[] {"mchat", "cus-var-indicator"}, "-");
+        checkNode(new Object[] {"mchat", "locale-var-indicator"}, "%");
+        checkNode(new Object[] {"mchat", "ip-censor"}, true);
+        checkNode(new Object[] {"mchat", "caps-lock-range"}, 3);
 
-        checkNode(new String[] {"suppress", "use-join"}, false);
-        checkNode(new String[] {"suppress", "use-kick"}, false);
-        checkNode(new String[] {"suppress", "use-quit"}, false);
-        checkNode(new String[] {"suppress", "max-join"}, 30);
-        checkNode(new String[] {"suppress", "max-kick"}, 30);
-        checkNode(new String[] {"suppress", "max-quit"}, 30);
+        checkNode(new Object[] {"suppress", "use-join"}, false);
+        checkNode(new Object[] {"suppress", "use-kick"}, false);
+        checkNode(new Object[] {"suppress", "use-quit"}, false);
+        checkNode(new Object[] {"suppress", "max-join"}, 30);
+        checkNode(new Object[] {"suppress", "max-kick"}, 30);
+        checkNode(new Object[] {"suppress", "max-quit"}, 30);
 
-        checkNode(new String[] {"info", "use-new-info"}, false);
-        checkNode(new String[] {"info", "use-leveled-nodes"}, false);
-        checkNode(new String[] {"info", "use-old-nodes"}, false);
-        checkNode(new String[] {"info", "add-new-players"}, false);
-        checkNode(new String[] {"info", "default-group"}, "default");
+        checkNode(new Object[] {"info", "use-new-info"}, false);
+        checkNode(new Object[] {"info", "use-leveled-nodes"}, false);
+        checkNode(new Object[] {"info", "use-old-nodes"}, false);
+        checkNode(new Object[] {"info", "add-new-players"}, false);
+        checkNode(new Object[] {"info", "default-group"}, "default");
 
         loadAliases();
 
-        //TODO Update when API is complete.
-        checkNode(new String[] {"aliases.mchatme"}, meAliases);
+        checkNode(new Object[]{"aliases", "mchatme"}, meAliases);
 
         setupAliasMap();
 
