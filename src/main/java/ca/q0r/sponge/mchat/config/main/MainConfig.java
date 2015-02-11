@@ -4,13 +4,10 @@ import ca.q0r.sponge.mchat.config.Config;
 import com.google.common.base.Functions;
 import ninja.leaping.configurate.ConfigurationNode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MainConfig extends Config {
-    private ArrayList<String> meAliases = new ArrayList<String>();
+    private List<Object> meAliases = new ArrayList<Object>();
 
     private HashMap<String, List<String>> aliasMap = new HashMap<String, List<String>>();
 
@@ -45,7 +42,8 @@ public class MainConfig extends Config {
 
         loadAliases();
 
-        checkNode(new String[] {"aliases", "mchatme"}, meAliases);
+        //TODO Update when API is complete.
+        checkNode(new String[] {"aliases.mchatme"}, meAliases);
 
         setupAliasMap();
 
@@ -61,8 +59,10 @@ public class MainConfig extends Config {
     }
 
     private void setupAliasMap() {
-        for (Map.Entry<Object, ? extends ConfigurationNode> entry : config.getNode("aliases").getChildrenMap().entrySet()) {
-            aliasMap.put(entry.getKey().toString(), config.getNode("aliases", entry.getKey()).getList(Functions.toStringFunction()));
+        if (!config.getNode("aliases").isVirtual()) {
+            for (Map.Entry<Object, ? extends ConfigurationNode> entry : config.getNode("aliases").getChildrenMap().entrySet()) {
+                aliasMap.put(entry.getKey().toString(), config.getNode("aliases", entry.getKey()).getList(Functions.toStringFunction()));
+            }
         }
     }
 }

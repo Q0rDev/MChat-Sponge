@@ -63,7 +63,7 @@ public abstract class Config {
      * @param value Value to be set.
      */
     public void set(Object[] node, Object value) {
-        config.getChild(node).setValue(value);
+        config.getNode(node).setValue(value);
     }
 
     /**
