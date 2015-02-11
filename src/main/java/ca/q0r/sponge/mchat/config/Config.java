@@ -34,7 +34,9 @@ public abstract class Config {
 
         if (!file.exists()) {
             try {
-                file.createNewFile();
+                if (file.createNewFile()) {
+                    MessageUtil.logFormatted("Config created successfully: " + file.getName());
+                }
             } catch (IOException e) {
                 MessageUtil.logFormatted("Issues creating file: " + file.getName());
                 e.printStackTrace();
