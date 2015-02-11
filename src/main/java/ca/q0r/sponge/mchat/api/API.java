@@ -252,8 +252,9 @@ public class API {
      *
      * @return Sender has Node.
      */
+    //TODO Update when API is complete.
     public static Boolean checkPermissions(Subject subject, String node) {
-        return subject.hasPermission(node);
+        return subject == null || subject.hasPermission(node);
     }
 
     /**

@@ -14,8 +14,13 @@ public class MessageUtil {
      * @param sender  Sender sending message.
      * @param message Message being sent.
      */
+    //TODO Update when API is complete.
     public static void sendRawMessage(CommandSource sender, String message) {
-        sender.sendMessage(message);
+        if (sender == null) {
+            System.out.println(message);
+        } else {
+            sender.sendMessage(message);
+        }
     }
 
     /**
