@@ -2,6 +2,7 @@ package ca.q0r.sponge.mchat.util;
 
 import com.google.common.base.Optional;
 import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.command.CommandSource;
 
 /**
@@ -19,7 +20,7 @@ public class MessageUtil {
         if (sender == null) {
             System.out.println(message);
         } else {
-            sender.sendMessage(message);
+            sender.sendMessage(Texts.of(message));
         }
     }
 

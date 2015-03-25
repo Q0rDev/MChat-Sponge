@@ -10,6 +10,7 @@ import ca.q0r.sponge.mchat.variables.ResolvePriority;
 import ca.q0r.sponge.mchat.variables.Var;
 import ca.q0r.sponge.mchat.variables.VariableManager;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.text.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -88,7 +89,10 @@ public class PlayerVars {
         public String getValue(UUID uuid) {
             Player player = ServerUtil.getPlayer(uuid);
             if (player != null) {
-                return player.getDisplayName().getContent().toString();
+                if (player.getDisplayName() instanceof Text.Literal) {
+                    Text.Literal name = (Text.Literal) player.getDisplayName();
+                    return name.getContent();
+                }
             }
 
             return "";
@@ -166,7 +170,7 @@ public class PlayerVars {
         public String getValue(UUID uuid) {
             Player player = ServerUtil.getPlayer(uuid);
             if (player != null) {
-                return String.valueOf(player.getHunger());
+                return String.valueOf(player.getFoodLevel());
             }
 
             return "";
@@ -178,7 +182,7 @@ public class PlayerVars {
         public String getValue(UUID uuid) {
             Player player = ServerUtil.getPlayer(uuid);
             if (player != null) {
-                return API.createBasicBar(player.getHunger(), 20, 10);
+                return API.createBasicBar(player.getFoodLevel(), 20, 10);
             }
 
             return "";

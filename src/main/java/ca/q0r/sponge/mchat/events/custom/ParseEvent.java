@@ -10,8 +10,7 @@ import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.variables.VariableManager;
 import com.typesafe.config.ConfigValueType;
 import ninja.leaping.configurate.ConfigurationNode;
-import org.spongepowered.api.util.event.Event;
-import org.spongepowered.api.util.event.callback.CallbackList;
+import org.spongepowered.api.event.AbstractEvent;
 
 import java.util.Map;
 import java.util.UUID;
@@ -21,7 +20,7 @@ import java.util.regex.Pattern;
 /**
  * Event that is fired when Parser is used.
  */
-public class ParseEvent implements Event {
+public class ParseEvent extends AbstractEvent {
     private UUID uuid;
     private String world, message, format;
 
@@ -38,11 +37,6 @@ public class ParseEvent implements Event {
         this.world = world;
         this.message = message;
         this.format = format;
-    }
-
-    //TODO Find out what these /should/ do!
-    public CallbackList getCallbacks() {
-        return new CallbackList();
     }
 
     /**

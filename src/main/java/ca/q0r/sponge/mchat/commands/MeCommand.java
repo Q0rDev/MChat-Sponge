@@ -6,14 +6,14 @@ import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
 import com.google.common.base.Optional;
 import org.spongepowered.api.entity.player.Player;
-import org.spongepowered.api.text.message.Messages;
+import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.command.CommandException;
 import org.spongepowered.api.util.command.CommandSource;
 import org.spongepowered.api.world.World;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @NonnullByDefault
@@ -46,13 +46,13 @@ public class MeCommand implements CommandCallable {
                 ServerUtil.getGame().getEventManager().post(event);
 
                 if (!event.isCancelled()) {
-                    ServerUtil.getGame().getServer().get().broadcastMessage(Messages.builder(event.getFormat()).build());
+                    ServerUtil.getGame().getServer().get().broadcastMessage(Texts.of(event.getFormat()));
                 }
 
                 return true;
             } else {
                 String senderName = "Console";
-                ServerUtil.getGame().getServer().get().broadcastMessage(Messages.builder("* " + senderName + " " + message).build());
+                ServerUtil.getGame().getServer().get().broadcastMessage(Texts.of("* " + senderName + " " + message));
                 MessageUtil.log("* " + senderName + " " + message);
                 return true;
             }
@@ -78,6 +78,6 @@ public class MeCommand implements CommandCallable {
     }
 
     public List<String> getSuggestions(CommandSource source, String raw) throws CommandException {
-        return Arrays.asList();
+        return new ArrayList<String>();
     }
 }

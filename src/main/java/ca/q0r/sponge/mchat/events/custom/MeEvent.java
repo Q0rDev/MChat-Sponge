@@ -1,16 +1,15 @@
 package ca.q0r.sponge.mchat.events.custom;
 
 import ca.q0r.sponge.mchat.api.Parser;
+import org.spongepowered.api.event.AbstractEvent;
 import org.spongepowered.api.util.event.Cancellable;
-import org.spongepowered.api.util.event.Event;
-import org.spongepowered.api.util.event.callback.CallbackList;
 
 import java.util.UUID;
 
 /**
  * Event that is fired when /mchatme is used.
  */
-public class MeEvent implements Event, Cancellable {
+public class MeEvent extends AbstractEvent implements Cancellable {
     private UUID uuid;
     private String world, message;
     private boolean cancelled;
@@ -28,11 +27,6 @@ public class MeEvent implements Event, Cancellable {
         this.message = message;
 
         this.cancelled = false;
-    }
-
-    //TODO Find out what these /should/ do!
-    public CallbackList getCallbacks() {
-        return new CallbackList();
     }
 
     /**

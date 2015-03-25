@@ -143,17 +143,17 @@ public class Reader {
 
         ConfigurationNode infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
 
-        if (!infoConfig.getNode("users." + uuid.toString() + ".info." + info).isVirtual()) {
-            return infoConfig.getNode("users." + uuid.toString() + ".info." + info).getString();
-        } else if (!infoConfig.getNode("users." + uuid.toString() + ".worlds." + world + "." + info).isVirtual()) {
-            return infoConfig.getNode("users." + uuid.toString() + ".worlds." + world + "." + info).getString();
-        } else if (!infoConfig.getNode("users." + uuid.toString() + ".group").isVirtual()) {
-            String group = infoConfig.getNode("users." + uuid.toString() + ".group").getString();
+        if (!infoConfig.getNode("users", uuid.toString(), "info", info).isVirtual()) {
+            return infoConfig.getNode("users", uuid.toString(), "info", info).getString();
+        } else if (!infoConfig.getNode("users", uuid.toString(), "worlds", world + "", info).isVirtual()) {
+            return infoConfig.getNode("users", uuid.toString(), "worlds", world + "", info).getString();
+        } else if (!infoConfig.getNode("users", uuid.toString(), "group").isVirtual()) {
+            String group = infoConfig.getNode("users", uuid.toString(), "group").getString();
 
-            if (!infoConfig.getNode("groups." + group + ".info." + info).isVirtual()) {
-                return infoConfig.getNode("groups." + group + ".info." + info).getString();
-            } else if (!infoConfig.getNode("groups." + group + ".worlds." + world + "." + info).isVirtual()) {
-                return infoConfig.getNode("groups." + group + ".worlds." + world + "." + info).getString();
+            if (!infoConfig.getNode("groups", group, "info", info).isVirtual()) {
+                return infoConfig.getNode("groups", group, "info", info).getString();
+            } else if (!infoConfig.getNode("groups", group, "worlds", world + "", info).isVirtual()) {
+                return infoConfig.getNode("groups", group, "worlds", world + "", info).getString();
             }
         }
 
@@ -163,8 +163,8 @@ public class Reader {
     private static String getMChatGroup(UUID uuid) {
         ConfigurationNode infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
 
-        if (!infoConfig.getNode("users." + uuid.toString() + ".group").isVirtual()) {
-            return infoConfig.getNode("users." + uuid.toString() + ".group").getString();
+        if (!infoConfig.getNode("users", uuid.toString(), "group").isVirtual()) {
+            return infoConfig.getNode("users", uuid.toString(), "group").getString();
         }
 
         return "";
@@ -174,18 +174,18 @@ public class Reader {
         ConfigurationNode infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
         HashMap<Integer, String> iMap = new HashMap<Integer, String>();
 
-        if (infoConfig.getNode("mchat." + info).isVirtual()) {
+        if (infoConfig.getNode("mchat", info).isVirtual()) {
             return "";
         }
 
-        if (infoConfig.getNode("rank." + info).isVirtual()) {
+        if (infoConfig.getNode("rank", info).isVirtual()) {
             return getSpongeInfo(uuid, info);
         }
 
-        for (Map.Entry<Object, ? extends ConfigurationNode> entry : infoConfig.getChildrenMap().entrySet()) {
+        for (Map.Entry<Object, ? extends ConfigurationNode> entry : infoConfig.getNode("mchat").getChildrenMap().entrySet()) {
             String key = entry.getKey().toString();
 
-            if (key.contains("mchat." + info + ".")) {
+            if (key.contains(info)) {
                 if (API.checkPermissions(uuid, key)) {
                     String rVal = key.replaceFirst("mchat\\.", "rank.");
 
@@ -213,14 +213,14 @@ public class Reader {
     private static String getSpongeInfo(UUID uuid, String info) {
         ConfigurationNode infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
 
-        if (infoConfig.getNode("mchat." + info).isVirtual()) {
+        if (infoConfig.getNode("mchat", info).isVirtual()) {
             return "";
         }
 
-        for (Map.Entry<Object, ? extends ConfigurationNode> entry : infoConfig.getChildrenMap().entrySet()) {
+        for (Map.Entry<Object, ? extends ConfigurationNode> entry : infoConfig.getNode("mchat").getChildrenMap().entrySet()) {
             String key = entry.getKey().toString();
 
-            if (key.contains("mchat." + info + ".")) {
+            if (key.contains(info)) {
                 if (API.checkPermissions(uuid, key)) {
                     String infoResolve = entry.getValue().getString();
 
@@ -250,8 +250,8 @@ public class Reader {
             return "";
         }
 
-        if (!infoConfig.getNode("groupnames." + group).isVirtual()) {
-            return infoConfig.getNode("groupnames." + group).getString();
+        if (!infoConfig.getNode("groupnames", group).isVirtual()) {
+            return infoConfig.getNode("groupnames", group).getString();
         }
 
         return group;
@@ -271,8 +271,8 @@ public class Reader {
             return "";
         }
 
-        if (!infoConfig.getNode("worldnames." + world).isVirtual()) {
-            return infoConfig.getNode("worldnames." + world).getString();
+        if (!infoConfig.getNode("worldnames", world).isVirtual()) {
+            return infoConfig.getNode("worldnames", world).getString();
         }
 
         return world;
@@ -288,9 +288,9 @@ public class Reader {
     public static String getMName(UUID uuid) {
         ConfigurationNode infoConfig = ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig();
 
-        if (!infoConfig.getNode("mname." + uuid).isVirtual()) {
-            if (!(infoConfig.getNode("mname." + uuid).getString().isEmpty())) {
-                return infoConfig.getNode("mname." + uuid).getString();
+        if (!infoConfig.getNode("mname", uuid.toString()).isVirtual()) {
+            if (!(infoConfig.getNode("mname", uuid.toString()).getString().isEmpty())) {
+                return infoConfig.getNode("mname", uuid.toString()).getString();
             }
         }
 

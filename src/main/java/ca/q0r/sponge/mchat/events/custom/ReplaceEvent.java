@@ -1,13 +1,12 @@
 package ca.q0r.sponge.mchat.events.custom;
 
+import org.spongepowered.api.event.AbstractEvent;
 import org.spongepowered.api.util.event.Cancellable;
-import org.spongepowered.api.util.event.Event;
-import org.spongepowered.api.util.event.callback.CallbackList;
 
 /**
  * Event that is fired when Variables are replaced.
  */
-public class ReplaceEvent implements Event, Cancellable {
+public class ReplaceEvent extends AbstractEvent implements Cancellable {
     private String var, value, format;
     private boolean cancelled;
 
@@ -24,11 +23,6 @@ public class ReplaceEvent implements Event, Cancellable {
         this.format = format;
 
         this.cancelled = false;
-    }
-
-    //TODO Find out what these /should/ do!
-    public CallbackList getCallbacks() {
-        return new CallbackList();
     }
 
     /**

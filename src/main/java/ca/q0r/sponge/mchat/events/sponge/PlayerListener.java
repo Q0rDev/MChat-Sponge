@@ -12,9 +12,9 @@ import ca.q0r.sponge.mchat.types.InfoType;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
 import org.spongepowered.api.entity.player.Player;
-import org.spongepowered.api.event.entity.living.player.PlayerJoinEvent;
-import org.spongepowered.api.event.entity.living.player.PlayerQuitEvent;
-import org.spongepowered.api.text.message.Messages;
+import org.spongepowered.api.event.entity.player.PlayerJoinEvent;
+import org.spongepowered.api.event.entity.player.PlayerQuitEvent;
+import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.event.Order;
 import org.spongepowered.api.util.event.Subscribe;
 
@@ -35,7 +35,7 @@ public class PlayerListener {
         UUID uuid = player.getUniqueId();
 
         if (MainType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
-            if (ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig().getNode("users." + uuid).isVirtual()) {
+            if (ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig().getNode("users." + uuid.toString()).isVirtual()) {
                 Writer.addBase(uuid.toString(), InfoType.USER);
             }
         }
@@ -52,9 +52,9 @@ public class PlayerListener {
         if (MainType.MCHAT_ALTER_EVENTS.getBoolean()) {
             if (MainType.SUPPRESS_USE_JOIN.getBoolean()) {
                 suppressEventMessage(Parser.parseEvent(uuid, world, EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", MainType.SUPPRESS_MAX_JOIN.getInteger());
-                event.setJoinMessage(Messages.builder("").build());
+                event.setJoinMessage(Texts.of());
             } else {
-                event.setJoinMessage(Messages.builder(Parser.parseEvent(uuid, world, EventType.JOIN)).build());
+                event.setJoinMessage(Texts.of(Parser.parseEvent(uuid, world, EventType.JOIN)));
             }
         }
     }
@@ -101,22 +101,22 @@ public class PlayerListener {
 
         if (MainType.SUPPRESS_USE_QUIT.getBoolean()) {
             suppressEventMessage(Parser.parseEvent(uuid, world, EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", MainType.SUPPRESS_MAX_QUIT.getInteger());
-            event.setQuitMessage(Messages.builder("").build());
+            event.setQuitMessage(Texts.of());
         } else {
-            event.setQuitMessage(Messages.builder(Parser.parseEvent(uuid, world, EventType.QUIT)).build());
+            event.setQuitMessage(Texts.of(Parser.parseEvent(uuid, world, EventType.QUIT)));
         }
     }
 
     private void suppressEventMessage(String format, String permNode, String overrideNode, Integer max) {
         for (Player player : ServerUtil.getServer().getOnlinePlayers()) {
             if (API.checkPermissions(player.getUniqueId(), overrideNode)) {
-                player.sendMessage(format);
+                player.sendMessage(Texts.of(format));
                 continue;
             }
 
             if (!(ServerUtil.getServer().getOnlinePlayers().size() > max)) {
                 if (!API.checkPermissions(player.getUniqueId(), permNode)) {
-                    player.sendMessage(format);
+                    player.sendMessage(Texts.of(format));
                 }
             }
         }

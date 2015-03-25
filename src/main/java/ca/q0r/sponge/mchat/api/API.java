@@ -151,7 +151,7 @@ public class API {
     public static String createFoodBar(Player player) {
         float maxFood = 20;
         float barLength = 10;
-        float food = player.getHunger();
+        double food = player.getFoodLevel();
 
         return createBasicBar(food, maxFood, barLength);
     }
@@ -165,8 +165,8 @@ public class API {
      *
      * @return Formatted Health Bar.
      */
-    public static String createBasicBar(float currentValue, float maxValue, float barLength) {
-        int fill = Math.round((currentValue / maxValue) * barLength);
+    public static String createBasicBar(double currentValue, float maxValue, float barLength) {
+        long fill = Math.round((currentValue / maxValue) * barLength);
 
         String barColor = (fill <= (barLength / 4)) ? "&4" : (fill <= (barLength / 7)) ? "&e" : "&2";
 
@@ -194,7 +194,7 @@ public class API {
      * @return Player has Node.
      */
     public static Boolean checkPermissions(Player player, String node) {
-        return player.hasPermission(node);// || player.isOp();
+        return true;//player.hasPermission(node);// || player.isOp();
     }
 
     /**
