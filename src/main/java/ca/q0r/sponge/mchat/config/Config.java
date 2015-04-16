@@ -3,6 +3,7 @@ package ca.q0r.sponge.mchat.config;
 
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ninja.leaping.configurate.ConfigurationNode;
+import ninja.leaping.configurate.ConfigurationOptions;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 
@@ -48,6 +49,8 @@ public abstract class Config {
         try {
             config = loader.load();
         } catch (IOException e) {
+            config = loader.createEmptyNode(ConfigurationOptions.defaults());
+
             MessageUtil.logFormatted("Issues loading: " + file.getName());
             e.printStackTrace();
         }
@@ -61,7 +64,7 @@ public abstract class Config {
     /**
      * Sets node / value pair to config.
      *
-     * @param node Key to be set.
+     * @param node  Key to be set.
      * @param value Value to be set.
      */
     public void set(Object[] node, Object value) {
@@ -92,7 +95,7 @@ public abstract class Config {
     /**
      * Check if Node is Set, if not set Value.
      *
-     * @param node   Node to check.
+     * @param node     Node to check.
      * @param defValue Value to set if Node is not found.
      */
     public void checkNode(Object[] node, Object defValue) {

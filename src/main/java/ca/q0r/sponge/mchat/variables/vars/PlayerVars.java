@@ -9,6 +9,9 @@ import ca.q0r.sponge.mchat.util.ServerUtil;
 import ca.q0r.sponge.mchat.variables.ResolvePriority;
 import ca.q0r.sponge.mchat.variables.Var;
 import ca.q0r.sponge.mchat.variables.VariableManager;
+import org.spongepowered.api.data.manipulators.DisplayNameData;
+import org.spongepowered.api.data.manipulators.FoodData;
+import org.spongepowered.api.data.manipulators.HealthData;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.Text;
 
@@ -89,8 +92,8 @@ public class PlayerVars {
         public String getValue(UUID uuid) {
             Player player = ServerUtil.getPlayer(uuid);
             if (player != null) {
-                if (player.getDisplayName() instanceof Text.Literal) {
-                    Text.Literal name = (Text.Literal) player.getDisplayName();
+                if (player.getData(DisplayNameData.class).get().getDisplayName() instanceof Text.Literal) {
+                    Text.Literal name = (Text.Literal) player.getData(DisplayNameData.class).get().getDisplayName();
                     return name.getContent();
                 }
             }
@@ -146,7 +149,7 @@ public class PlayerVars {
         public String getValue(UUID uuid) {
             Player player = ServerUtil.getPlayer(uuid);
             if (player != null) {
-                return String.valueOf(player.getHealth());
+                return String.valueOf(player.getData(HealthData.class).get().getHealth());
             }
 
             return "";
@@ -170,7 +173,7 @@ public class PlayerVars {
         public String getValue(UUID uuid) {
             Player player = ServerUtil.getPlayer(uuid);
             if (player != null) {
-                return String.valueOf(player.getFoodLevel());
+                return String.valueOf(player.getData(FoodData.class).get().getFoodLevel());
             }
 
             return "";
@@ -182,7 +185,7 @@ public class PlayerVars {
         public String getValue(UUID uuid) {
             Player player = ServerUtil.getPlayer(uuid);
             if (player != null) {
-                return API.createBasicBar(player.getFoodLevel(), 20, 10);
+                return API.createBasicBar(player.getData(FoodData.class).get().getFoodLevel(), 20, 10);
             }
 
             return "";

@@ -49,7 +49,7 @@ public class MChat {
 
         // Add All Players To Info Config
         if (MainType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
-            for (Player player : ServerUtil.getGame().getServer().get().getOnlinePlayers()) {
+            for (Player player : ServerUtil.getGame().getServer().getOnlinePlayers()) {
                 if (!ConfigManager.getConfig(ConfigType.INFO_HOCON).getConfig().getNode("users." + player.getUniqueId().toString()).getBoolean()) {
                     Writer.addBase(player.getUniqueId().toString(), InfoType.USER);
                 }

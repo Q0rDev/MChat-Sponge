@@ -4,8 +4,8 @@ import ca.q0r.sponge.mchat.events.custom.MeEvent;
 import ca.q0r.sponge.mchat.util.CommandUtil;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
-import com.google.common.base.Optional;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.api.util.command.CommandCallable;
@@ -46,13 +46,13 @@ public class MeCommand implements CommandCallable {
                 ServerUtil.getGame().getEventManager().post(event);
 
                 if (!event.isCancelled()) {
-                    ServerUtil.getGame().getServer().get().broadcastMessage(Texts.of(event.getFormat()));
+                    ServerUtil.getGame().getServer().broadcastMessage(Texts.of(event.getFormat()));
                 }
 
                 return true;
             } else {
                 String senderName = "Console";
-                ServerUtil.getGame().getServer().get().broadcastMessage(Texts.of("* " + senderName + " " + message));
+                ServerUtil.getGame().getServer().broadcastMessage(Texts.of("* " + senderName + " " + message));
                 MessageUtil.log("* " + senderName + " " + message);
                 return true;
             }
@@ -65,15 +65,15 @@ public class MeCommand implements CommandCallable {
         return CommandUtil.hasCommandPerm(source, "mchat.me");
     }
 
-    public Optional<String> getShortDescription() {
-        return Optional.of("MChat /me Implementation");
+    public String getShortDescription(CommandSource commandSource) {
+        return "MChat /me Implementation";
     }
 
-    public Optional<String> getHelp() {
-        return Optional.absent();
+    public Text getHelp(CommandSource commandSource) {
+        return Texts.of();
     }
 
-    public String getUsage() {
+    public String getUsage(CommandSource commandSource) {
         return "/<command> [Message] - Displays message.";
     }
 

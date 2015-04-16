@@ -11,6 +11,7 @@ import ca.q0r.sponge.mchat.types.EventType;
 import ca.q0r.sponge.mchat.types.InfoType;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
+import org.spongepowered.api.data.manipulators.NameData;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.event.entity.player.PlayerJoinEvent;
 import org.spongepowered.api.event.entity.player.PlayerQuitEvent;
@@ -137,6 +138,6 @@ public class PlayerListener {
         } catch (Exception ignored) {
         }*/
 
-        player.setCustomName(listName);
+        player.getData(NameData.class).get().setCustomName(listName);
     }
 }

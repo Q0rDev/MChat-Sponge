@@ -4,6 +4,7 @@ import ca.q0r.sponge.mchat.api.API;
 import ca.q0r.sponge.mchat.api.Parser;
 import ca.q0r.sponge.mchat.config.locale.LocaleType;
 import ca.q0r.sponge.mchat.config.main.MainType;
+import org.spongepowered.api.data.manipulators.NameData;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.event.entity.player.PlayerChatEvent;
 import org.spongepowered.api.text.Text;
@@ -42,7 +43,7 @@ public class ChatListener {
 
             // Chat Distance Stuff
             if (MainType.MCHAT_CHAT_DISTANCE.getDouble() > 0) {
-                for (Player players : event.getGame().getServer().get().getOnlinePlayers()) {
+                for (Player players : event.getGame().getServer().getOnlinePlayers()) {
                     if (players.getWorld() != player.getWorld()
                             || players.getLocation().getPosition().distance(player.getLocation().getPosition()) > MainType.MCHAT_CHAT_DISTANCE.getDouble()) {
                         if (isSpy(players.getUniqueId(), players.getWorld().getName())) {
@@ -83,6 +84,6 @@ public class ChatListener {
         } catch (Exception ignored) {
         }*/
 
-        player.setCustomName(listName);
+        player.getData(NameData.class).get().setCustomName(listName);
     }
 }

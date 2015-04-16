@@ -22,11 +22,11 @@ public class Writer {
         String base = type.getConfValue();
 
         if (type.equals(InfoType.USER)) {
-            config.set(new Object[] {base, name, "group"}, MainType.INFO_DEFAULT_GROUP.getString());
+            config.set(new Object[]{base, name, "group"}, MainType.INFO_DEFAULT_GROUP.getString());
         }
 
-        config.set(new Object[] {base, name, "info", "prefix"}, "");
-        config.set(new Object[] {base, name, "info", "suffix"}, "");
+        config.set(new Object[]{base, name, "info", "prefix"}, "");
+        config.set(new Object[]{base, name, "info", "suffix"}, "");
 
         save();
 
@@ -46,7 +46,7 @@ public class Writer {
 
         addBase(uuid, InfoType.USER);
 
-        config.set(new Object[] {"users", uuid, "group"}, group);
+        config.set(new Object[]{"users", uuid, "group"}, group);
 
         save();
 
@@ -68,8 +68,8 @@ public class Writer {
             addBase(name, type);
         }
 
-        config.set(new Object[] {base, name, "worlds", world + "prefix"}, "");
-        config.set(new Object[] {base, name, "worlds", world + "suffix"}, "");
+        config.set(new Object[]{base, name, "worlds", world + "prefix"}, "");
+        config.set(new Object[]{base, name, "worlds", world + "suffix"}, "");
 
         save();
     }
@@ -90,7 +90,7 @@ public class Writer {
             addBase(name, type);
         }
 
-        config.set(new Object[] {base, name, "info", var}, value);
+        config.set(new Object[]{base, name, "info", var}, value);
 
         save();
     }
@@ -112,7 +112,7 @@ public class Writer {
             addWorld(name, type, world);
         }
 
-        config.set(new Object[] {base, name, "worlds", world, var}, value);
+        config.set(new Object[]{base, name, "worlds", world, var}, value);
 
         save();
     }
@@ -130,7 +130,7 @@ public class Writer {
             addBase(uuid, group);
         }
 
-        config.set(new Object[] {"users", uuid, "group"}, group);
+        config.set(new Object[]{"users", uuid, "group"}, group);
 
         save();
     }
@@ -146,7 +146,7 @@ public class Writer {
         String base = type.getConfValue();
 
         if (!config.getConfig().getNode(base, name).isVirtual()) {
-            config.set(new Object[] {base, name}, null);
+            config.set(new Object[]{base, name}, null);
 
             save();
         }
@@ -176,7 +176,7 @@ public class Writer {
 
         if (!config.getConfig().getNode(base, name).isVirtual()
                 && !config.getConfig().getNode(base, name, "worlds", world).isVirtual()) {
-            config.set(new Object[] {base, name, "worlds", world}, null);
+            config.set(new Object[]{base, name, "worlds", world}, null);
 
             save();
         }
@@ -206,8 +206,8 @@ public class Writer {
         String name = player.getName();
 
         if (!config.getConfig().getNode(base, name).isVirtual()) {
-            config.set(new Object[] {base, uuid}, config.getConfig().getNode(base, name));
-            config.set(new Object[] {base, name}, null);
+            config.set(new Object[]{base, uuid}, config.getConfig().getNode(base, name));
+            config.set(new Object[]{base, name}, null);
 
             save();
         }
@@ -217,7 +217,7 @@ public class Writer {
         Config config = ConfigManager.getConfig(ConfigType.INFO_HOCON);
 
         if (config.getConfig().getNode("groups", group).isVirtual()) {
-            config.set(new Object[] {"groups", group, "info", "prefix"}, "");
+            config.set(new Object[]{"groups", group, "info", "prefix"}, "");
             config.set(new Object[]{"groups", group, "info", "suffix"}, "");
 
             save();

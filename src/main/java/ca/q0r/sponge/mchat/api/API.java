@@ -4,6 +4,8 @@ import ca.q0r.sponge.mchat.config.main.MainType;
 import ca.q0r.sponge.mchat.types.IndicatorType;
 import ca.q0r.sponge.mchat.types.PluginType;
 import ca.q0r.sponge.mchat.util.ServerUtil;
+import org.spongepowered.api.data.manipulators.FoodData;
+import org.spongepowered.api.data.manipulators.HealthData;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.service.permission.Subject;
 import org.spongepowered.api.service.permission.context.Context;
@@ -136,7 +138,7 @@ public class API {
     public static String createHealthBar(Player player) {
         float maxHealth = 20;
         float barLength = 10;
-        float health = new Float(player.getHealth());
+        float health = new Float(player.getData(HealthData.class).get().getHealth());
 
         return createBasicBar(health, maxHealth, barLength);
     }
@@ -151,7 +153,7 @@ public class API {
     public static String createFoodBar(Player player) {
         float maxFood = 20;
         float barLength = 10;
-        double food = player.getFoodLevel();
+        double food = player.getData(FoodData.class).get().getFoodLevel();
 
         return createBasicBar(food, maxFood, barLength);
     }

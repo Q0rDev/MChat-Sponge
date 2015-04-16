@@ -23,7 +23,7 @@ public class ServerUtil {
     }
 
     public static Server getServer() {
-        return game.getServer().get();
+        return game.getServer();
     }
 
     public static Player getPlayer(String find) {

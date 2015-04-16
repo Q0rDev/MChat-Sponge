@@ -7,8 +7,9 @@ import ca.q0r.sponge.mchat.types.InfoType;
 import ca.q0r.sponge.mchat.util.CommandUtil;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
-import com.google.common.base.Optional;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.command.CommandException;
@@ -16,6 +17,7 @@ import org.spongepowered.api.util.command.CommandSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @NonnullByDefault
@@ -249,15 +251,15 @@ public class InfoAlterCommand implements CommandCallable {
         return true;
     }
 
-    public Optional<String> getShortDescription() {
-        return Optional.of("MChat Info Alter Commands");
+    public String getShortDescription(CommandSource commandSource) {
+        return "MChat Info Alter Commands";
     }
 
-    public Optional<String> getHelp() {
-        return Optional.absent();
+    public Text getHelp(CommandSource commandSource) {
+        return Texts.of();
     }
 
-    public String getUsage() {
+    public String getUsage(CommandSource commandSource) {
         if (type == InfoType.USER) {
             return "/<command> = Show Info User Help.";
         } else if (type == InfoType.GROUP) {
@@ -286,7 +288,7 @@ public class InfoAlterCommand implements CommandCallable {
 
         if (args.length == 2) {
             if (type == InfoType.USER && (args[0].equalsIgnoreCase("s") || args[0].equalsIgnoreCase("set"))) {
-                return Arrays.asList("group");
+                return Collections.singletonList("group");
             } else {
                 return Arrays.asList(t, "ivar", "world", "wvar");
             }
@@ -312,7 +314,7 @@ public class InfoAlterCommand implements CommandCallable {
             return uuids;
         }
 
-        return Arrays.asList();
+        return Collections.emptyList();
     }
 
     private String combineArgs(String[] args, Integer startingPoint) {

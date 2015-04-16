@@ -13,7 +13,7 @@ public class CensorConfig extends Config {
     public void loadDefaults() {
         if (config.getValue() == null) {
             Map<String, Object> map = new HashMap<String, Object>();
-            
+
             map.put("fuck", "fawg");
             map.put("cunt", "punt");
             map.put("shit", "feces");

@@ -5,13 +5,15 @@ import ca.q0r.sponge.mchat.config.ConfigType;
 import ca.q0r.sponge.mchat.util.CommandUtil;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.util.VersionUtil;
-import com.google.common.base.Optional;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.command.CommandException;
 import org.spongepowered.api.util.command.CommandSource;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @NonnullByDefault
@@ -103,15 +105,15 @@ public class MChatCommand implements CommandCallable {
         return true;
     }
 
-    public Optional<String> getShortDescription() {
-        return Optional.of("MChat Reload/Version Commands");
+    public String getShortDescription(CommandSource commandSource) {
+        return "MChat Reload/Version Commands";
     }
 
-    public Optional<String> getHelp() {
-        return Optional.absent();
+    public Text getHelp(CommandSource commandSource) {
+        return Texts.of();
     }
 
-    public String getUsage() {
+    public String getUsage(CommandSource commandSource) {
         return "[MChat] Help Screen\n" +
                 "- /<command> reload config = Reload Config.\n" +
                 "- /<command> reload info = Reload Info.\n" +
@@ -132,6 +134,6 @@ public class MChatCommand implements CommandCallable {
             return Arrays.asList("config", "censor", "info", "locale", "all");
         }
 
-        return Arrays.asList();
+        return Collections.emptyList();
     }
 }
