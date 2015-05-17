@@ -4,13 +4,13 @@ import ca.q0r.sponge.mchat.api.API;
 import ca.q0r.sponge.mchat.api.Parser;
 import ca.q0r.sponge.mchat.config.locale.LocaleType;
 import ca.q0r.sponge.mchat.config.main.MainType;
-import org.spongepowered.api.data.manipulators.NameData;
+import org.spongepowered.api.data.manipulators.DisplayNameData;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.event.Order;
+import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.entity.player.PlayerChatEvent;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.Texts;
-import org.spongepowered.api.util.event.Order;
-import org.spongepowered.api.util.event.Subscribe;
 
 import java.util.UUID;
 
@@ -84,6 +84,6 @@ public class ChatListener {
         } catch (Exception ignored) {
         }*/
 
-        player.getData(NameData.class).get().setCustomName(listName);
+        player.getData(DisplayNameData.class).get().setDisplayName(Texts.of(listName));
     }
 }

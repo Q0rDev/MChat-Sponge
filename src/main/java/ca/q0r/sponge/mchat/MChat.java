@@ -18,12 +18,12 @@ import ca.q0r.sponge.mchat.util.Timer;
 import ca.q0r.sponge.mchat.variables.VariableManager;
 import ca.q0r.sponge.util.VersionUtil;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.state.ServerStartingEvent;
 import org.spongepowered.api.event.state.ServerStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.service.event.EventManager;
 import org.spongepowered.api.util.command.CommandCallable;
-import org.spongepowered.api.util.event.Subscribe;
 
 @Plugin(id = "MChat", name = "MChat", version = VersionUtil.VERSION, dependencies = "after:GeoIPTools,Heroes,Towny,Vault,SimpleClans2,SimpleClansChat;")
 public class MChat {

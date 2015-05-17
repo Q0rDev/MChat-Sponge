@@ -11,13 +11,13 @@ import ca.q0r.sponge.mchat.types.EventType;
 import ca.q0r.sponge.mchat.types.InfoType;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
-import org.spongepowered.api.data.manipulators.NameData;
+import org.spongepowered.api.data.manipulators.DisplayNameData;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.event.Order;
+import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.entity.player.PlayerJoinEvent;
 import org.spongepowered.api.event.entity.player.PlayerQuitEvent;
 import org.spongepowered.api.text.Texts;
-import org.spongepowered.api.util.event.Order;
-import org.spongepowered.api.util.event.Subscribe;
 
 import java.util.UUID;
 
@@ -138,6 +138,6 @@ public class PlayerListener {
         } catch (Exception ignored) {
         }*/
 
-        player.getData(NameData.class).get().setCustomName(listName);
+        player.getData(DisplayNameData.class).get().setDisplayName(Texts.of(listName));
     }
 }

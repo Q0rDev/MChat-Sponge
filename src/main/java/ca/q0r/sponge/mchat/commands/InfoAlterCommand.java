@@ -7,12 +7,14 @@ import ca.q0r.sponge.mchat.types.InfoType;
 import ca.q0r.sponge.mchat.util.CommandUtil;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
+import com.google.common.base.Optional;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.command.CommandException;
+import org.spongepowered.api.util.command.CommandResult;
 import org.spongepowered.api.util.command.CommandSource;
 
 import java.util.ArrayList;
@@ -30,16 +32,16 @@ public class InfoAlterCommand implements CommandCallable {
         cmd = command;
     }
 
-    public boolean call(CommandSource source, String raw, List<String> list) throws CommandException {
+    public Optional<CommandResult> process(CommandSource source, String raw) throws CommandException {
         String[] args = raw.split(" ");
 
-        //if (!command.getName().equalsIgnoreCase(cmd)) {
-        //    return true;
-        //}
+        /*if (!command.getName().equalsIgnoreCase(cmd)) {
+            return Optional.of(CommandResult.success());
+        }*/
 
         if (args.length == 0) {
             MessageUtil.sendMessage(source, "Use '/" + cmd + " add/edit/remove' for more info.");
-            return true;
+            return Optional.of(CommandResult.success());
         }
 
         InfoEditType editType;
@@ -64,7 +66,7 @@ public class InfoAlterCommand implements CommandCallable {
                 if (player == null) {
                     MessageUtil.sendMessage(source, "Player '" + args[2] + "' is offline for this command.");
                     MessageUtil.sendMessage(source, "Until Proper API's have been released Players will have to be online.");
-                    return true;
+                    return Optional.of(CommandResult.success());
                 } else {
                     uuid = player.getUniqueId().toString();
                 }
@@ -79,71 +81,71 @@ public class InfoAlterCommand implements CommandCallable {
                         "    - /" + cmd + " add ivar <" + T + "> <Variable> [Value]\n" +
                         "    - /" + cmd + " add world <" + T + "> <World>\n" +
                         "    - /" + cmd + " add wvar <" + T + "> <World> <Variable> [Value]");
-                return true;
+                return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase(t.substring(0, 1))
                     || args[1].equalsIgnoreCase(t)) {
                 if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".add." + t)) {
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 editType = InfoEditType.ADD_BASE;
 
                 if (args.length < editType.getLength()) {
                     editType.sendMsg(source, cmd, type);
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 Writer.addBase(uuid, type);
                 MessageUtil.sendMessage(source, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
-                return true;
+                return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("iVar")
                     || args[1].equalsIgnoreCase("infoVariable")) {
                 if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".add.ivar")) {
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 editType = InfoEditType.ADD_INFO_VAR;
 
                 if (args.length < editType.getLength()) {
                     editType.sendMsg(source, cmd, type);
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 Writer.setInfoVar(uuid, type, args[3], combineArgs(args, 4));
                 MessageUtil.sendMessage(source, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
-                return true;
+                return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("w")
                     || args[1].equalsIgnoreCase("world")) {
                 if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".add.world")) {
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 editType = InfoEditType.ADD_WORLD;
 
                 if (args.length < editType.getLength()) {
                     editType.sendMsg(source, cmd, type);
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 Writer.addWorld(uuid, type, args[3]);
                 MessageUtil.sendMessage(source, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
-                return true;
+                return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("wVar")
                     || args[1].equalsIgnoreCase("worldVariable")) {
                 if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".add.wvar")) {
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 editType = InfoEditType.ADD_WORLD_VAR;
 
                 if (args.length < editType.getLength()) {
                     editType.sendMsg(source, cmd, type);
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 Writer.setWorldVar(uuid, type, args[3], args[4], combineArgs(args, 5));
                 MessageUtil.sendMessage(source, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
-                return true;
+                return Optional.of(CommandResult.success());
             }
         } else if (args[0].equalsIgnoreCase("r")
                 || args[0].equalsIgnoreCase("remove")) {
@@ -153,120 +155,120 @@ public class InfoAlterCommand implements CommandCallable {
                         "    - /" + cmd + " remove ivar <" + T + "> <Variable>\n" +
                         "    - /" + cmd + " remove world <" + T + "> <World>\n" +
                         "    - /" + cmd + " remove wvar <" + T + "> <World> <Variable>");
-                return true;
+                return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase(t.substring(0, 1))
                     || args[1].equalsIgnoreCase(t)) {
                 if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".remove." + t)) {
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 editType = InfoEditType.REMOVE_BASE;
 
                 if (args.length < editType.getLength()) {
                     editType.sendMsg(source, cmd, type);
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 Writer.removeBase(uuid, type);
                 MessageUtil.sendMessage(source, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
-                return true;
+                return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("iVar")
                     || args[1].equalsIgnoreCase("infoVariable")) {
                 if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".remove.ivar")) {
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 editType = InfoEditType.REMOVE_INFO_VAR;
 
                 if (args.length < editType.getLength()) {
                     editType.sendMsg(source, cmd, type);
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 Writer.removeInfoVar(uuid, type, args[3]);
                 MessageUtil.sendMessage(source, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
-                return true;
+                return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("w")
                     || args[1].equalsIgnoreCase("world")) {
                 if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".remove.world")) {
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 editType = InfoEditType.REMOVE_WORLD;
 
                 if (args.length < editType.getLength()) {
                     editType.sendMsg(source, cmd, type);
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 Writer.removeWorld(uuid, type, args[3]);
                 MessageUtil.sendMessage(source, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
-                return true;
+                return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("wVar")
                     || args[1].equalsIgnoreCase("worldVariable")) {
                 if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".remove.wvar")) {
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 editType = InfoEditType.REMOVE_WORLD_VAR;
 
                 if (args.length < editType.getLength()) {
                     editType.sendMsg(source, cmd, type);
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 Writer.removeWorldVar(uuid, type, args[3], args[4]);
                 MessageUtil.sendMessage(source, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
-                return true;
+                return Optional.of(CommandResult.success());
             }
         } else if (type == InfoType.USER
                 && (args[0].equalsIgnoreCase("s") || args[0].equalsIgnoreCase("set"))) {
             if (args.length == 1) {
                 MessageUtil.sendMessage(source, "Usage for '/mchat user set':\n" +
                         "    - /" + cmd + " set group <Player> <" + T + ">");
-                return true;
+                return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("g")
                     || args[1].equalsIgnoreCase("group")) {
                 if (!CommandUtil.hasCommandPerm(source, "mchat.user.set.group")) {
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 editType = InfoEditType.SET_GROUP;
 
                 if (args.length < editType.getLength()) {
                     editType.sendMsg(source, cmd, type);
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
 
                 Writer.setGroup(uuid, args[3]);
                 MessageUtil.sendMessage(source, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
-                return true;
+                return Optional.of(CommandResult.success());
             }
         }
 
-        return false;
+        return Optional.of(CommandResult.empty());
     }
 
     public boolean testPermission(CommandSource commandSource) {
         return true;
     }
 
-    public String getShortDescription(CommandSource commandSource) {
-        return "MChat Info Alter Commands";
+    public Optional<Text> getShortDescription(CommandSource commandSource) {
+        return Optional.of(Texts.of(new Object[]{"MChat Info Alter Commands"}));
     }
 
-    public Text getHelp(CommandSource commandSource) {
-        return Texts.of();
+    public Optional<Text> getHelp(CommandSource commandSource) {
+        return Optional.absent();
     }
 
-    public String getUsage(CommandSource commandSource) {
+    public Text getUsage(CommandSource commandSource) {
         if (type == InfoType.USER) {
-            return "/<command> = Show Info User Help.";
+            return Texts.of("/<command> = Show Info User Help.");
         } else if (type == InfoType.GROUP) {
-            return "/<command> = Show Info Group Help.";
+            return Texts.of("/<command> = Show Info Group Help.");
         }
 
-        return "";
+        return Texts.of();
     }
 
     public List<String> getSuggestions(CommandSource source, String raw) throws CommandException {

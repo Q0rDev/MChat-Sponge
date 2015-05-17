@@ -4,12 +4,14 @@ import ca.q0r.sponge.mchat.events.custom.MeEvent;
 import ca.q0r.sponge.mchat.util.CommandUtil;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
+import com.google.common.base.Optional;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.command.CommandException;
+import org.spongepowered.api.util.command.CommandResult;
 import org.spongepowered.api.util.command.CommandSource;
 import org.spongepowered.api.world.World;
 
@@ -21,12 +23,12 @@ public class MeCommand implements CommandCallable {
     public MeCommand() {
     }
 
-    public boolean call(CommandSource source, String raw, List<String> list) throws CommandException {
+    public Optional<CommandResult> process(CommandSource source, String raw) throws CommandException {
         String[] args = raw.split(" ");
 
-        if (!list.contains("mchatme")) {
-            return true;
-        }
+        /*if (!list.contains("mchatme")) {
+            return Optional.of(CommandResult.success());
+        }*/
 
         if (args.length > 0) {
             String message = "";
@@ -49,32 +51,32 @@ public class MeCommand implements CommandCallable {
                     ServerUtil.getGame().getServer().broadcastMessage(Texts.of(event.getFormat()));
                 }
 
-                return true;
+                return Optional.of(CommandResult.success());
             } else {
                 String senderName = "Console";
                 ServerUtil.getGame().getServer().broadcastMessage(Texts.of("* " + senderName + " " + message));
                 MessageUtil.log("* " + senderName + " " + message);
-                return true;
+                return Optional.of(CommandResult.success());
             }
         }
 
-        return false;
+        return Optional.of(CommandResult.empty());
     }
 
     public boolean testPermission(CommandSource source) {
         return CommandUtil.hasCommandPerm(source, "mchat.me");
     }
 
-    public String getShortDescription(CommandSource commandSource) {
-        return "MChat /me Implementation";
+    public Optional<Text> getShortDescription(CommandSource commandSource) {
+        return Optional.of(Texts.of(new Object[]{"MChat /me Implementation"}));
     }
 
-    public Text getHelp(CommandSource commandSource) {
-        return Texts.of();
+    public Optional<Text> getHelp(CommandSource commandSource) {
+        return Optional.absent();
     }
 
-    public String getUsage(CommandSource commandSource) {
-        return "/<command> [Message] - Displays message.";
+    public Text getUsage(CommandSource commandSource) {
+        return Texts.of("/<command> [Message] - Displays message.");
     }
 
     public List<String> getSuggestions(CommandSource source, String raw) throws CommandException {

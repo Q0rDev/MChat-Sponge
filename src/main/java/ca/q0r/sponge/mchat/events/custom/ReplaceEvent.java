@@ -1,7 +1,7 @@
 package ca.q0r.sponge.mchat.events.custom;
 
 import org.spongepowered.api.event.AbstractEvent;
-import org.spongepowered.api.util.event.Cancellable;
+import org.spongepowered.api.event.Cancellable;
 
 /**
  * Event that is fired when Variables are replaced.

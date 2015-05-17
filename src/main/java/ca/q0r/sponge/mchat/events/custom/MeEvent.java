@@ -2,7 +2,7 @@ package ca.q0r.sponge.mchat.events.custom;
 
 import ca.q0r.sponge.mchat.api.Parser;
 import org.spongepowered.api.event.AbstractEvent;
-import org.spongepowered.api.util.event.Cancellable;
+import org.spongepowered.api.event.Cancellable;
 
 import java.util.UUID;
 

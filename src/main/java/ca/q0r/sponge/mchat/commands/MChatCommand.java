@@ -5,11 +5,13 @@ import ca.q0r.sponge.mchat.config.ConfigType;
 import ca.q0r.sponge.mchat.util.CommandUtil;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.util.VersionUtil;
+import com.google.common.base.Optional;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.command.CommandException;
+import org.spongepowered.api.util.command.CommandResult;
 import org.spongepowered.api.util.command.CommandSource;
 
 import java.util.Arrays;
@@ -21,20 +23,20 @@ public class MChatCommand implements CommandCallable {
     public MChatCommand() {
     }
 
-    public boolean call(CommandSource source, String raw, List<String> list) throws CommandException {
+    public Optional<CommandResult> process(CommandSource source, String raw) throws CommandException {
         String[] args = raw.split(" ");
 
-        if (!list.contains("mchat")) {
+        /*if (!list.contains("mchat")) {
             return true;
-        }
+        }*/
 
         if (args.length == 0) {
-            return false;
+            return Optional.of(CommandResult.empty());
         }
 
         if (args[0].equalsIgnoreCase("version")) {
             if (!CommandUtil.hasCommandPerm(source, "mchat.version")) {
-                return true;
+                return Optional.of(CommandResult.success());
             }
 
             String[] vArray = VersionUtil.VERSION.split("-");
@@ -45,82 +47,82 @@ public class MChatCommand implements CommandCallable {
             MessageUtil.sendMessage(source, "&Git Commit &5#&6:&2 " + (vArray.length < 4 ? vArray[2] : vArray[3]));
             MessageUtil.sendMessage(source, "&6Release: &2" + (vArray.length < 4));
 
-            return true;
+            return Optional.of(CommandResult.success());
         } else if (args[0].equalsIgnoreCase("reload")
                 || args[0].equalsIgnoreCase("r")) {
             if (args.length > 1) {
                 if (args[1].equalsIgnoreCase("config")
                         || args[1].equalsIgnoreCase("co")) {
                     if (!CommandUtil.hasCommandPerm(source, "mchat.reload.config")) {
-                        return true;
+                        return Optional.of(CommandResult.success());
                     }
 
                     ConfigManager.reloadConfig(ConfigType.CONFIG_HOCON);
                     MessageUtil.sendMessage(source, "Config Reloaded.");
-                    return true;
+                    return Optional.of(CommandResult.success());
                 } else if (args[1].equalsIgnoreCase("info")
                         || args[1].equalsIgnoreCase("i")) {
                     if (!CommandUtil.hasCommandPerm(source, "mchat.reload.info")) {
-                        return true;
+                        return Optional.of(CommandResult.success());
                     }
 
                     ConfigManager.reloadConfig(ConfigType.INFO_HOCON);
                     MessageUtil.sendMessage(source, "Info Reloaded.");
-                    return true;
+                    return Optional.of(CommandResult.success());
                 } else if (args[1].equalsIgnoreCase("censor")
                         || args[1].equalsIgnoreCase("ce")) {
                     if (!CommandUtil.hasCommandPerm(source, "mchat.reload.censor")) {
-                        return true;
+                        return Optional.of(CommandResult.success());
                     }
 
                     ConfigManager.reloadConfig(ConfigType.CENSOR_HOCON);
                     MessageUtil.sendMessage(source, "Censor Reloaded.");
-                    return true;
+                    return Optional.of(CommandResult.success());
                 } else if (args[1].equalsIgnoreCase("locale")
                         || args[1].equalsIgnoreCase("l")) {
                     if (!CommandUtil.hasCommandPerm(source, "mchat.reload.locale")) {
-                        return true;
+                        return Optional.of(CommandResult.success());
                     }
 
                     ConfigManager.reloadConfig(ConfigType.LOCALE_HOCON);
                     MessageUtil.sendMessage(source, "Locale Reloaded.");
-                    return true;
+                    return Optional.of(CommandResult.success());
                 } else if (args[1].equalsIgnoreCase("all")
                         || args[1].equalsIgnoreCase("a")) {
                     if (!CommandUtil.hasCommandPerm(source, "mchat.reload.all")) {
-                        return true;
+                        return Optional.of(CommandResult.success());
                     }
 
                     ConfigManager.initialize();
                     MessageUtil.sendMessage(source, "All Config's Reloaded.");
-                    return true;
+                    return Optional.of(CommandResult.success());
                 }
             }
         }
 
-        return false;
+        return Optional.of(CommandResult.empty());
     }
 
     public boolean testPermission(CommandSource commandSource) {
         return true;
     }
 
-    public String getShortDescription(CommandSource commandSource) {
-        return "MChat Reload/Version Commands";
+    public Optional<Text> getShortDescription(CommandSource commandSource) {
+        return Optional.of(Texts.of(new Object[]{"MChat Reload/Version Commands"}));
     }
 
-    public Text getHelp(CommandSource commandSource) {
-        return Texts.of();
+    public Optional<Text> getHelp(CommandSource commandSource) {
+        return Optional.absent();
     }
 
-    public String getUsage(CommandSource commandSource) {
-        return "[MChat] Help Screen\n" +
+    public Text getUsage(CommandSource commandSource) {
+        return Texts.of("[MChat] Help Screen\n" +
                 "- /<command> reload config = Reload Config.\n" +
                 "- /<command> reload info = Reload Info.\n" +
                 "- /<command> reload censor = Reload Censor.\n" +
                 "- /<command> reload locale = Reload Locale.\n" +
                 "- /<command> reload all = Reload All Configs.\n" +
-                "- /<command> version = Show MChat Version.";
+                "- /<command> version = Show MChat Version.");
     }
 
     public List<String> getSuggestions(CommandSource source, String raw) throws CommandException {

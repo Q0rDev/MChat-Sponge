@@ -4,9 +4,9 @@ import ca.q0r.sponge.mchat.config.ConfigManager;
 import ca.q0r.sponge.mchat.config.ConfigType;
 import ca.q0r.sponge.mchat.config.main.MainConfig;
 import ca.q0r.sponge.mchat.util.ServerUtil;
+import org.spongepowered.api.event.Order;
+import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.message.CommandEvent;
-import org.spongepowered.api.util.event.Order;
-import org.spongepowered.api.util.event.Subscribe;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +26,7 @@ public class CommandListener {
                     List<String> list = Arrays.asList(entry.getKey());
 
                     try {
-                        ServerUtil.getGame().getCommandDispatcher().call(event.getSource(), event.getArguments(), list);
+                        ServerUtil.getGame().getCommandDispatcher().process(event.getSource(), event.getArguments());
                         event.setCancelled(true);
                     } catch (Exception ignored) {
                     }
