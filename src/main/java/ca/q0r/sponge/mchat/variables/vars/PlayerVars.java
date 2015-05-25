@@ -9,9 +9,9 @@ import ca.q0r.sponge.mchat.util.ServerUtil;
 import ca.q0r.sponge.mchat.variables.ResolvePriority;
 import ca.q0r.sponge.mchat.variables.Var;
 import ca.q0r.sponge.mchat.variables.VariableManager;
-import org.spongepowered.api.data.manipulators.DisplayNameData;
-import org.spongepowered.api.data.manipulators.entities.FoodData;
-import org.spongepowered.api.data.manipulators.entities.HealthData;
+import org.spongepowered.api.data.manipulator.DisplayNameData;
+import org.spongepowered.api.data.manipulator.entity.FoodData;
+import org.spongepowered.api.data.manipulator.entity.HealthData;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.Text;
 

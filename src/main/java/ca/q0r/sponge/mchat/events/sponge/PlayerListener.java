@@ -11,7 +11,7 @@ import ca.q0r.sponge.mchat.types.EventType;
 import ca.q0r.sponge.mchat.types.InfoType;
 import ca.q0r.sponge.mchat.util.MessageUtil;
 import ca.q0r.sponge.mchat.util.ServerUtil;
-import org.spongepowered.api.data.manipulators.DisplayNameData;
+import org.spongepowered.api.data.manipulator.DisplayNameData;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.Subscribe;
@@ -30,7 +30,7 @@ public class PlayerListener {
 
     @Subscribe(order = Order.EARLY)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        final Player player = event.getPlayer();
+        final Player player = event.getSource();
 
         String world = player.getWorld().getName();
         UUID uuid = player.getUniqueId();
@@ -53,9 +53,9 @@ public class PlayerListener {
         if (MainType.MCHAT_ALTER_EVENTS.getBoolean()) {
             if (MainType.SUPPRESS_USE_JOIN.getBoolean()) {
                 suppressEventMessage(Parser.parseEvent(uuid, world, EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", MainType.SUPPRESS_MAX_JOIN.getInteger());
-                event.setJoinMessage(Texts.of());
+                event.setNewMessage(Texts.of());
             } else {
-                event.setJoinMessage(Texts.of(Parser.parseEvent(uuid, world, EventType.JOIN)));
+                event.setNewMessage(Texts.of(Parser.parseEvent(uuid, world, EventType.JOIN)));
             }
         }
     }
@@ -93,8 +93,8 @@ public class PlayerListener {
 
     @Subscribe(order = Order.EARLY)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        UUID uuid = event.getPlayer().getUniqueId();
-        String world = event.getPlayer().getWorld().getName();
+        UUID uuid = event.getSource().getUniqueId();
+        String world = event.getSource().getWorld().getName();
 
         if (!MainType.MCHAT_ALTER_EVENTS.getBoolean()) {
             return;
@@ -102,9 +102,9 @@ public class PlayerListener {
 
         if (MainType.SUPPRESS_USE_QUIT.getBoolean()) {
             suppressEventMessage(Parser.parseEvent(uuid, world, EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", MainType.SUPPRESS_MAX_QUIT.getInteger());
-            event.setQuitMessage(Texts.of());
+            event.setNewMessage(Texts.of());
         } else {
-            event.setQuitMessage(Texts.of(Parser.parseEvent(uuid, world, EventType.QUIT)));
+            event.setNewMessage(Texts.of(Parser.parseEvent(uuid, world, EventType.QUIT)));
         }
     }
 

@@ -4,7 +4,7 @@ import ca.q0r.sponge.mchat.api.API;
 import ca.q0r.sponge.mchat.api.Parser;
 import ca.q0r.sponge.mchat.config.locale.LocaleType;
 import ca.q0r.sponge.mchat.config.main.MainType;
-import org.spongepowered.api.data.manipulators.DisplayNameData;
+import org.spongepowered.api.data.manipulator.DisplayNameData;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.Subscribe;
@@ -24,7 +24,7 @@ public class ChatListener {
             return;
         }
 
-        Player player = event.getPlayer();
+        Player player = event.getSource();
 
         String world = player.getWorld().getName();
         Text text = event.getMessage();
@@ -57,7 +57,7 @@ public class ChatListener {
                 }
             }
 
-            event.setMessage(eventFormat);
+            event.setNewMessage(eventFormat);
         }
     }
 
