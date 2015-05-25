@@ -38,13 +38,10 @@ public class MChat {
         // Load Config
         ConfigManager.initialize();
 
-        // Initialize Classes
         initializeClasses();
 
-        // Register Events
         registerEvents();
 
-        // Setup Commands
         setupCommands();
 
         // Add All Players To Info Config

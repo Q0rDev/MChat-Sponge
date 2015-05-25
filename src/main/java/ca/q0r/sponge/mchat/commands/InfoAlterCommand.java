@@ -46,15 +46,15 @@ public class InfoAlterCommand implements CommandCallable {
 
         InfoEditType editType;
 
-        String p = "user";
-        String t = "player";
-        String T = "Player";
+        String alterType = "user";
+        String typeName = "player";
+        String textName = "Player";
         String uuid = "";
 
         if (type == InfoType.GROUP) {
-            p = "group";
-            t = "group";
-            T = "Group";
+            alterType = "group";
+            typeName = "group";
+            textName = "Group";
         }
 
         if (args.length > 2) {
@@ -77,14 +77,14 @@ public class InfoAlterCommand implements CommandCallable {
                 || args[0].equalsIgnoreCase("add")) {
             if (args.length == 1) {
                 MessageUtil.sendMessage(source, "Usage for '/" + cmd + " add':\n" +
-                        "    - /" + cmd + " add " + t + " <" + T + ">\n" +
-                        "    - /" + cmd + " add ivar <" + T + "> <Variable> [Value]\n" +
-                        "    - /" + cmd + " add world <" + T + "> <World>\n" +
-                        "    - /" + cmd + " add wvar <" + T + "> <World> <Variable> [Value]");
+                        "    - /" + cmd + " add " + typeName + " <" + textName + ">\n" +
+                        "    - /" + cmd + " add ivar <" + textName + "> <Variable> [Value]\n" +
+                        "    - /" + cmd + " add world <" + textName + "> <World>\n" +
+                        "    - /" + cmd + " add wvar <" + textName + "> <World> <Variable> [Value]");
                 return Optional.of(CommandResult.success());
-            } else if (args[1].equalsIgnoreCase(t.substring(0, 1))
-                    || args[1].equalsIgnoreCase(t)) {
-                if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".add." + t)) {
+            } else if (args[1].equalsIgnoreCase(typeName.substring(0, 1))
+                    || args[1].equalsIgnoreCase(typeName)) {
+                if (!CommandUtil.hasCommandPerm(source, "mchat." + alterType + ".add." + typeName)) {
                     return Optional.of(CommandResult.success());
                 }
 
@@ -100,7 +100,7 @@ public class InfoAlterCommand implements CommandCallable {
                 return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("iVar")
                     || args[1].equalsIgnoreCase("infoVariable")) {
-                if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".add.ivar")) {
+                if (!CommandUtil.hasCommandPerm(source, "mchat." + alterType + ".add.ivar")) {
                     return Optional.of(CommandResult.success());
                 }
 
@@ -116,7 +116,7 @@ public class InfoAlterCommand implements CommandCallable {
                 return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("w")
                     || args[1].equalsIgnoreCase("world")) {
-                if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".add.world")) {
+                if (!CommandUtil.hasCommandPerm(source, "mchat." + alterType + ".add.world")) {
                     return Optional.of(CommandResult.success());
                 }
 
@@ -132,7 +132,7 @@ public class InfoAlterCommand implements CommandCallable {
                 return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("wVar")
                     || args[1].equalsIgnoreCase("worldVariable")) {
-                if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".add.wvar")) {
+                if (!CommandUtil.hasCommandPerm(source, "mchat." + alterType + ".add.wvar")) {
                     return Optional.of(CommandResult.success());
                 }
 
@@ -151,14 +151,14 @@ public class InfoAlterCommand implements CommandCallable {
                 || args[0].equalsIgnoreCase("remove")) {
             if (args.length == 1) {
                 MessageUtil.sendMessage(source, "Usage for '/" + cmd + " remove':\n" +
-                        "    - /" + cmd + " remove " + t + " <" + T + ">\n" +
-                        "    - /" + cmd + " remove ivar <" + T + "> <Variable>\n" +
-                        "    - /" + cmd + " remove world <" + T + "> <World>\n" +
-                        "    - /" + cmd + " remove wvar <" + T + "> <World> <Variable>");
+                        "    - /" + cmd + " remove " + typeName + " <" + textName + ">\n" +
+                        "    - /" + cmd + " remove ivar <" + textName + "> <Variable>\n" +
+                        "    - /" + cmd + " remove world <" + textName + "> <World>\n" +
+                        "    - /" + cmd + " remove wvar <" + textName + "> <World> <Variable>");
                 return Optional.of(CommandResult.success());
-            } else if (args[1].equalsIgnoreCase(t.substring(0, 1))
-                    || args[1].equalsIgnoreCase(t)) {
-                if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".remove." + t)) {
+            } else if (args[1].equalsIgnoreCase(typeName.substring(0, 1))
+                    || args[1].equalsIgnoreCase(typeName)) {
+                if (!CommandUtil.hasCommandPerm(source, "mchat." + alterType + ".remove." + typeName)) {
                     return Optional.of(CommandResult.success());
                 }
 
@@ -174,7 +174,7 @@ public class InfoAlterCommand implements CommandCallable {
                 return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("iVar")
                     || args[1].equalsIgnoreCase("infoVariable")) {
-                if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".remove.ivar")) {
+                if (!CommandUtil.hasCommandPerm(source, "mchat." + alterType + ".remove.ivar")) {
                     return Optional.of(CommandResult.success());
                 }
 
@@ -190,7 +190,7 @@ public class InfoAlterCommand implements CommandCallable {
                 return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("w")
                     || args[1].equalsIgnoreCase("world")) {
-                if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".remove.world")) {
+                if (!CommandUtil.hasCommandPerm(source, "mchat." + alterType + ".remove.world")) {
                     return Optional.of(CommandResult.success());
                 }
 
@@ -206,7 +206,7 @@ public class InfoAlterCommand implements CommandCallable {
                 return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("wVar")
                     || args[1].equalsIgnoreCase("worldVariable")) {
-                if (!CommandUtil.hasCommandPerm(source, "mchat." + p + ".remove.wvar")) {
+                if (!CommandUtil.hasCommandPerm(source, "mchat." + alterType + ".remove.wvar")) {
                     return Optional.of(CommandResult.success());
                 }
 
@@ -225,7 +225,7 @@ public class InfoAlterCommand implements CommandCallable {
                 && (args[0].equalsIgnoreCase("s") || args[0].equalsIgnoreCase("set"))) {
             if (args.length == 1) {
                 MessageUtil.sendMessage(source, "Usage for '/mchat user set':\n" +
-                        "    - /" + cmd + " set group <Player> <" + T + ">");
+                        "    - /" + cmd + " set group <Player> <" + textName + ">");
                 return Optional.of(CommandResult.success());
             } else if (args[1].equalsIgnoreCase("g")
                     || args[1].equalsIgnoreCase("group")) {
