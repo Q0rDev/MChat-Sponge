@@ -6,7 +6,7 @@
     <name>MChat-Sponge</name>
     <artifactId>MChat-Sponge</artifactId>
     <packaging>jar</packaging>
-    <version>1.8.0-R0.0-SNAPSHOT</version>
+    <version>1.8.0-R0.1-SNAPSHOT</version>
     <url>https://github.com/Q0rDev/MChat</url>
     <description>Chat Formatting for Sponge</description>
 
